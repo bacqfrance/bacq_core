@@ -51,8 +51,8 @@ It is composed as follows:
 ## Installing packages
 **Clone the repository**
 ```bash
-git clone https://gitlab.lne.fr/MetriQs-DEV-France/bacq.git
-cd bacq
+git clone https://gitlab.lne.fr/MetriQs-DEV-France/bacq-project/bacq_core.git
+cd bacq_core
 ```
 
 **Install the package**
