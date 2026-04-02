@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=40.8.0","wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bacq_core"
+version = "0.1.0"
+description = "BACQ benchmark library"
+authors = [
+  {name = "Noe OLIVIER", email = "noe.olivier@thalesgroup.com"},
+  {name = "Harold ERBIN"},
+  {name = "Grégoire MISGUICH", email = "gregoire.misguich@cea.fr"},
+  {name = "Kyrylo SNIZHKO", email = "kyrylo.snizhko@cea.fr"},
+  {name = "Stéphane LOUISE", email = "stephane.louise@cea.fr"},
+  {name = "Harshit VERMA", email = "harshit.verma@cnrs.fr"},
+  {name = "Damien NICOLAZIC", email = "damien.nicolazic@eviden.com"},
+]
+readme = "README.md"
+keywords = ["benchmark", "application-oriented", "quantum computing", "bacq"]
+requires-python = ">=3.10"
+classifiers = [
+  "Private :: Do Not Upload",
+  "Development Status :: 4-Beta",
+  "Programming Language :: Python",
+  "Topic :: Scientific/Engineering :: Quantum Computing",
+]
+
+[project.urls]
+Homepage = "https://www.lne.fr/en/metriqs-france/projet-bacq"
+Repository = "https://github.com/bacqfrance"

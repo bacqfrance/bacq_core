@@ -1,0 +1,14 @@
+{
+    "filetype": "protocol",
+    "benchmark": "qws",
+    "device": "BasicSimulator",
+    "parameters": {
+        "graph_type": "cycle",
+        "n": 2,
+        "d": 1,
+        "num_walk": 1,
+        "num_aa": 0,
+        "num_instances": 10,
+        "num_shots": 1000
+    }
+}

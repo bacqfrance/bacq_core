@@ -1,0 +1,19 @@
+{
+    "filetype": "protocol_seq",
+    "benchmark": "qws",
+    "device": "BasicSimulator",
+    "parameters": {
+        "graph_type": "cycle",
+        "num_walk": [1,2,1,2,3,4],
+        "num_aa": 0,
+        "num_instances": 10,
+        "num_shots": 1000
+    },
+    "sequence_parameters": {
+        "graph_type": "cycle",
+        "n_min": 2,
+        "d_min": 1,
+        "n_max": 3,
+        "d_max": 4
+    }
+}

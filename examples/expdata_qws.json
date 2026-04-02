@@ -1,0 +1,18 @@
+{
+    "filetype": "experiment",
+    "benchmark": "qws",
+    "device": "ibm_simulator",
+    "parameters": {
+        "graph_type": "cycle",
+        "n": 2,
+        "d": 1,
+        "num_walk": 1,
+        "num_aa": 0,
+        "num_instances": 10,
+        "num_shots": 1000
+    },
+    "result": {
+        "01": 0.5112,
+        "11": 0.4904
+    }
+}
