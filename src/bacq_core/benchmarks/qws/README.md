@@ -24,13 +24,30 @@ The protocol details are given in the associated package `qws`.
 
 This folder proposes an implementation that allows for the direct evaluation of qiskit-available hardware, especially IBM QPU.
 
-In order to run benchmark experiments on another platform, the end user can:
+** Run benchmark experiments on already implemented QPU:**
 1) ensure the `.json` input file contains `"benchmark": "qws"`.
-2) provide an additional file (i.e. `helpers_platform.py`) that construct a circuit using the expected platform language
-3) provide (if necessary) a new file describing a global class that defines how jobs are submitted to the new QPU: i.e. `myprovider_realdevice.py` to be located in `src/bacq_core/hardware/`.
-4) adapt the `experiment.py` file to enable access to the expected QPU:
-	- `run()`: add access to new hardware
-	- `run_newQPU()`: construct the corresponding funcion (adapted to the new QPU) based on the example proposed `run_qiskit()`
+2) ensure the `.json` input file includes `"device": {device_name}`.
+
+**Run benchmark experiments on a new IBM device:**
+1) ensure the `.json` input file contains `"benchmark": "qws"`.
+2) ensure the `.json` input file includes `"device": {device_name}`.
+3) add `{device_name}` to the list of available IBM devices in `hardware/ibm_realdevice.py` (or `hardware/ibm_simulator.py`).
+
+**Run benchmark experiments on a device from a new provider:**
+1) ensure the `.json` input file contains `"benchmark": "qws"`.
+2) ensure the `.json` input file includes `"device": {device_name}`.
+3) create a new file `hardware/newprovider_realdevice.py` on the example of existing files:
+	-	include a list of available QPU (with `{device_name}`),
+	-	include a new class (i.e. `NewProviderRealDevice()`),
+	-	defines QPU access (authentification, etc.),
+	-	defines a `compute()` method to manage job submissions.
+4) adapt the `experiment.py` file:
+	-	in `run()`: initialize the hardware class for newly available QPU,
+	-	**(if necessary)** create a new `run_newsoftwarestack()` function based on the `run_qiskit()` example,
+	-	**(if necessary)** create a new file `helpers_newsoftwarestack.py` to construct the algorithm using this new software stack while ensuring the protocol requirements are met.
+
+
+*Note*: Running experiments on real QPU requires that a QPU access can be established by the end-user.
 
 ## Author
 Noe OLIVIER, cortAIx Labs, Thales, France
