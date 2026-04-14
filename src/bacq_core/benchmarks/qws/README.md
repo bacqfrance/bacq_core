@@ -24,7 +24,7 @@ The protocol details are given in the associated package `qws`.
 
 This folder proposes an implementation that allows for the direct evaluation of qiskit-available hardware, especially IBM QPU.
 
-** Run benchmark experiments on already implemented QPU:**
+**Run benchmark experiments on already implemented QPU:**
 1) ensure the `.json` input file contains `"benchmark": "qws"`.
 2) ensure the `.json` input file includes `"device": {device_name}`.
 
