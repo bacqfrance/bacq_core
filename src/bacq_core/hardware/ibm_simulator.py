@@ -4,33 +4,48 @@ Define the IBMSimulator device.
 This emulates an IBM gate-based device, and returns only counts.
 """
 
-from qiskit.providers.basic_provider import BasicSimulator
+from qiskit_ibm_runtime import QiskitRuntimeService
+from qiskit_aer import AerSimulator
 from qiskit_ibm_runtime.fake_provider import FakeMarrakesh
-from qiskit.transpiler import generate_preset_pass_manager
 from qiskit_ibm_runtime import Session, SamplerV2 as Sampler
+from qiskit.transpiler import generate_preset_pass_manager
 
+_IBM_SIMULATORS = [
+    "AerSimulator",
+    "FakeMarrakesh",
+]
 
 class IBMSimulator:
-    def __init__(self, name="BasicSimulator"):
-        '''Define simulator selected for experiments.'''
+    def __init__(self, name="BasicSimulator", refresh=False):
+        '''
+        Define simulator selected for experiments.
+        '''
         match name:
-            case "BasicSimulator":
-                self.device = BasicSimulator()
+            case "AerSimulator":
+                self.device = AerSimulator()
+
             case "FakeMarrakesh":
                 self.device = FakeMarrakesh()
+                if refresh:
+                    service = QiskitRuntimeService()
+                    self.device.refresh(service)
+
             case _:
                 raise NotImplementedError(
-                    f"IBM simulator {name=} is not yet available. Consider using 'BasicSimulator'."
+                    f"IBM simulator {name} is not available. Consider adding {name} to 'hardware/ibm_simulator.py' or choose a simulator from {_IBM_SIMULATORS}."
                 )
+
         self.name = name
 
-    def compute(self, circuits, num_shots):
+
+    def compute(self, circuits, num_shots, use_session=True):
         '''
         Run circuits on the device.
 
         Arguments:
             .circuits  -- single/list of qiskit circuits)
             .num_shots -- int, number of shots
+            .use_session: bool, execute code using Session or not
         
         Returns:
             .all_counts -- list of dict, each experimental results as counts 
@@ -41,14 +56,16 @@ class IBMSimulator:
         if not isinstance(circuits, list):
             circuits = [circuits]
 
-        transpiled_circuits = []
-        for circuit in circuits:
-            transpiled_circuits.append(pm.run(circuit))
+        transpiled_circuits = [pm.run(circ) for circ in circuits]
 
-        with Session(backend=self.device) as session:
-            sampler = Sampler(mode=session)
-            job = sampler.run(([(circuit_to_run, None, num_shots) for circuit_to_run in transpiled_circuits]))
-    
+        if not use_session:
+            sampler = Sampler(mode=self.device)
+            job = sampler.run(transpiled_circuits, shots=num_shots)
+        else:
+            with Session(backend=self.device) as session:
+                sampler = Sampler(mode=session)
+                job = sampler.run(transpiled_circuits, shots=num_shots)
+
         for k in range(len(transpiled_circuits)):
             counts = job.result()[k].data.cpos.get_counts()
             all_counts.append(counts)
