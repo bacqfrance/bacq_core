@@ -4,8 +4,8 @@ Noe Olivier -- March 2026
 Defines how to run an experiment for Quantum WalkScore
 """
 
-from bacq_core.hardware.ibm_simulator import IBMSimulator
-from bacq_core.hardware.ibm_realdevice import IBMRealDevice
+from bacq_core.hardware.ibm_simulator import IBMSimulator, _IBM_SIMULATORS
+from bacq_core.hardware.ibm_realdevice import IBMRealDevice, _IBM_REAL_DEVICES
 
 from .helpers_qiskit import build_circuit_qiskit
 from .helpers_instance import get_destination_states
@@ -27,24 +27,16 @@ def run(device, **params):
 
     check_parameters_value(graph_type, n, d, num_walk, num_aa, num_instances, num_shots, list_seq_params)
 
-    match device:
-        case "BasicSimulator":
-            hardware = IBMSimulator(device)
-            results = run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_shots, list_seq_params)
-        case "FakeMarrakesh":
-            hardware = IBMSimulator(device)
-            results = run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_shots, list_seq_params)
-        case "ibm_sherbrooke":
-            hardware = IBMRealDevice(device)
-            results = run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_shots, list_seq_params)
-        case "ibm_brisbane":
-            hardware = IBMRealDevice(device)
-            results = run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_shots, list_seq_params)
-            
-        case _:
-            raise NotImplementedError(
-                f"Benchmark QWS has not been implemented on {device=}."
-            )
+    if device in _IBM_REAL_DEVICES:
+        hardware = IBMRealDevice(device)
+        results = run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_shots, list_seq_params)
+    elif device in _IBM_SIMULATORS:
+        hardware = IBMSimulator(device)
+        results = run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_shots, list_seq_params)
+    else:
+        raise NotImplementedError(
+            f"Benchmark QWS is not currently implemented on {device=} : consider adding a new device.\nCurrently available:\n{_IBM_REAL_DEVICES=}\n{_IBM_SIMULATORS=}"
+        )
 
     return results
 
@@ -124,7 +116,6 @@ def run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_
             if isinstance(num_aa, list):
                 n_aa = num_aa[k]
 
-            #### TO CHECK: check get_dest_states is OK #######################
             destination_states, num_dims = get_destination_states(graph_type, n, d, num_instances)
             circuits = []
 
