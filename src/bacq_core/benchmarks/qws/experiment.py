@@ -69,17 +69,14 @@ def run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_
 
         all_counts = hardware.compute(circuits, num_shots)
 
-        tmp_result = {}
+        result = {}
         for k, counts in enumerate(all_counts):
             state = destination_states[k]
             success_proba = compute_success_proba(counts, state, num_shots)
-            if state not in tmp_result.keys():
-                tmp_result[state] = [success_proba, 1]
+            if state not in result.keys():
+                result[state] = [success_proba]
             else:
-                tmp_result[state][0] += success_proba
-                tmp_result[state][1] += 1
-
-        result = {state: tmp_result[state][0]/tmp_result[state][1] for state in tmp_result.keys()}
+                result[state].append(success_proba)
 
         exp_data = {
             "filetype": "experiment",
@@ -125,18 +122,17 @@ def run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_
 
             all_counts = hardware.compute(circuits, num_shots)
 
-            tmp_result = {}
+            result = {}
             for k, counts in enumerate(all_counts):
                 state = destination_states[k]
                 success_proba = compute_success_proba(counts, state, num_shots)
-                if state not in tmp_result.keys():
-                    tmp_result[state] = [success_proba, 1]
+                if state not in result.keys():
+                    result[state] = [success_proba]
                 else:
-                    tmp_result[state][0] += success_proba
-                    tmp_result[state][1] += 1
+                    result[state].append(success_proba)
 
             pbm_size = '(' + str(n) +',' + str(d) + ')'
-            results[pbm_size] = {state: tmp_result[state][0]/tmp_result[state][1] for state in tmp_result.keys()}
+            results[pbm_size] = result
         
         exp_data_seq = {
             "filetype": "experiment_seq",
