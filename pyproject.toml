@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "BACQ benchmark library"
 authors = [
   {name = "Noe OLIVIER", email = "noe.olivier@thalesgroup.com"},
-  {name = "Harold ERBIN"},
+  {name = "Harold ERBIN", email = "harold.erbin@gmail.com"},
   {name = "Grégoire MISGUICH", email = "gregoire.misguich@cea.fr"},
   {name = "Kyrylo SNIZHKO", email = "kyrylo.snizhko@cea.fr"},
   {name = "Stéphane LOUISE", email = "stephane.louise@cea.fr"},
