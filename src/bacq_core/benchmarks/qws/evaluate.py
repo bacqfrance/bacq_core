@@ -39,9 +39,9 @@ def compute_success(metric, distance, graph_type):
     """
     if graph_type in ["cycle", "2D-torus"]:
         if distance <= 2:
-                p_threshold = 1/3
-            else:
-                p_threshold = 1/5 + 1/(2**distance)
+            p_threshold = 1/3
+        else:
+            p_threshold = 1/5 + 1/(2**distance)
 
     else:
         raise ValueError(f"Parameter {graph_type=} is not valid. Expected 'cycle' or '2D-torus'.")
