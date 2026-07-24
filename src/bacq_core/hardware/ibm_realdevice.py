@@ -23,7 +23,6 @@ class IBMRealDevice:
         '''
         Define hardware to access for experiments.
         '''
-
         if name not in _IBM_REAL_DEVICES:
             raise NotImplementedError(
                 f"IBM access to {name=} is not available.\nConsider adding {name} to 'hardware/ibm_realdevice.py' or choose a device from {_IBM_REAL_DEVICES}."
@@ -33,13 +32,13 @@ class IBMRealDevice:
         self.device = service.backend(name)
         self.name = name
 
-    def compute(self, circuits, num_shots, use_session=True):
+    def compute(self, circuits, num_shots, use_session=False):
         '''
         Run circuits on the device.
 
         Arguments:
-            .circuits   : single/list of qiskit circuits)
-            .num_shots  : int, number of shots
+            .circuits   : single/list of qiskit circuits
+            .num_shots  : int, number of shots per circuit
             .use_session: bool, execute code using Session or not
         
         Returns:

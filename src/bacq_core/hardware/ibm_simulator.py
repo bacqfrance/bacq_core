@@ -16,7 +16,7 @@ _IBM_SIMULATORS = [
 ]
 
 class IBMSimulator:
-    def __init__(self, name="BasicSimulator", refresh=False):
+    def __init__(self, name="AerSimulator", refresh=False):
         '''
         Define simulator selected for experiments.
         '''
