@@ -1,14 +1,15 @@
 {
     "filetype": "protocol",
     "benchmark": "qws",
-    "device": "BasicSimulator",
+    "device": "AerSimulator",
     "parameters": {
         "graph_type": "cycle",
         "n": 2,
         "d": 1,
         "num_walk": 1,
         "num_aa": 0,
-        "num_instances": 10,
-        "num_shots": 1000
+        "num_instances": 2,
+        "num_batches": 4,
+        "num_shots_per_circuit": 1000
     }
 }

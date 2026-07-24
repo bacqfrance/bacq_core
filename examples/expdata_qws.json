@@ -1,18 +1,19 @@
 {
     "filetype": "experiment",
     "benchmark": "qws",
-    "device": "ibm_simulator",
+    "device": "AerSimulator",
     "parameters": {
         "graph_type": "cycle",
         "n": 2,
         "d": 1,
         "num_walk": 1,
         "num_aa": 0,
-        "num_instances": 10,
-        "num_shots": 1000
+        "num_instances": 2,
+        "num_batches": 4,
+        "num_shots_per_circuit": 1000
     },
     "result": {
-        "01": 0.5112,
-        "11": 0.4904
+        "01": [0.5112, 0.5206, 0.5165, 0.4975],
+        "11": [0.4904, 0.5016, 0.4884, 0.4925]
     }
 }
