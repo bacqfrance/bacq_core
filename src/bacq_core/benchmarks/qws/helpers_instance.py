@@ -55,7 +55,7 @@ def get_destination_states(graph_type, n, d, num_instances=1, num_batches=1):
             idx_node = np.random.randint(len(potential_destination_nodes))
             destination_node = potential_destination_nodes.pop(idx_node)
 
-        for b in range(num_batches):
-            destination_states.append("{0:b}".format(destination_node).zfill(num_dims*n))
+            for b in range(num_batches):
+                destination_states.append("{0:b}".format(destination_node).zfill(num_dims*n))
 
     return destination_states, num_dims
