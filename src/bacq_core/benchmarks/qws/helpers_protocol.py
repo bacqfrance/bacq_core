@@ -1,11 +1,13 @@
 """
-Noe Olivier -- March 2026
+Noe Olivier -- July 2026
 
 Defines functions to ensure the QWS protocol is well applied.
 """
 
-_MIN_NUM_SHOTS = 100
-_MIN_NUM_INSTANCES = 1
+_MIN_NUM_SHOTS_PER_CIRCUIT = 1000
+_MIN_NUM_SHOTS_PER_INSTANCE = 4000
+_MIN_NUM_INSTANCES_CYCLE = 2
+_MIN_NUM_INSTANCES_TORUS = 4
 _MIN_N = 2
 _MIN_D = 1
 
@@ -75,7 +77,7 @@ def compute_success_proba(counts, state, num_shots):
     '''
     num_shots_exp = sum(counts.values())
     if num_shots_exp != num_shots:
-        raise ValueError(f"Reported counts does not have the reight number of shots.\n{num_shots=} vs reported_counts={num_shots_exp}")
+        raise ValueError(f"Reported counts does not have the right number of shots.\n{num_shots=} vs reported_counts={num_shots_exp}")
 
     if state not in counts.keys():
         success_proba = 0
@@ -85,11 +87,11 @@ def compute_success_proba(counts, state, num_shots):
     return success_proba
 
 
-def check_parameters_value(graph_type, n, d, num_walk, num_aa, num_instances, num_shots, list_seq_params):
+def check_parameters_value(graph_type, n, d, num_walk, num_aa, num_instances, num_batches, num_shots, list_seq_params):
     '''
     '''
-    check_num_instances(num_instances)
-    check_num_shots(num_shots)
+    check_num_instances(num_instances, graph_type)
+    check_num_shots(num_shots, num_batches)
 
     if list_seq_params is None:
         check_n_d(graph_type, n, d)
@@ -116,25 +118,42 @@ def check_parameters_value(graph_type, n, d, num_walk, num_aa, num_instances, nu
                 check_num_aa(num_aa)
 
 
-def check_num_instances(num_instances):
+def check_num_instances(num_instances, graph_type):
     '''
     '''
     if not isinstance(num_instances, int):
         raise TypeError('Parameter num_instances must be <int>.')
 
-    if num_instances < _MIN_NUM_INSTANCES:
-        raise ValueError(f'Parameter {num_instances=} not valid: > {_MIN_NUM_INSTANCES} required.')
+    match graph_type:
+
+        case "cycle":
+            if num_instances < _MIN_NUM_INSTANCES_CYCLE:
+                raise ValueError(f'Parameter {num_instances=} not valid: >= {_MIN_NUM_INSTANCES_CYCLE} required for {graph_type=}.')
+
+        case "2D-torus":
+            if num_instances < _MIN_NUM_INSTANCES_TORUS:
+                raise ValueError(f'Parameter {num_instances=} not valid: >= {_MIN_NUM_INSTANCES_TORUS} required for {graph_type=}.')
+
+        case "_":
+            raise NotImplementedError(f"Parameter {graph_type=} is not implemented.\nSupported graphs: {_GRAPH_TYPES}")
 
     return num_instances
 
-def check_num_shots(num_shots):
+
+def check_num_shots(num_shots, num_batches):
     '''
     ''' 
     if not isinstance(num_shots, int):
-        raise TypeError('Parameter num_shots ust be <int>.')
+        raise TypeError('Parameter num_shots_per_circuit must be <int>.')
+    if not isinstance(num_batches, int):
+        raise TypeError('Parameter num_batches must be <int>.')
 
-    if num_shots < _MIN_NUM_SHOTS:
-        raise ValueError(f'Parameter {num_shots=} not valid: > {_MIN_NUM_SHOTS} required.')
+    if num_shots < _MIN_NUM_SHOTS_PER_CIRCUIT:
+        raise ValueError(f'Parameter num_shots_per_circuit={num_shots} not valid: >= {_MIN_NUM_SHOTS_PER_CIRCUIT} required.')
+
+    if num_shots * num_batches < _MIN_NUM_SHOTS_PER_INSTANCE:
+        raise ValueError(f'Parameters (num_batches, num_shots_per_circuit) not well defined: >= {_MIN_NUM_SHOTS_PER_INSTANCE} total shots per instance required.')
+
 
 
 def check_n_d(graph_type, n, d):

@@ -1,5 +1,5 @@
 """
-Noe Olivier -- March 2026
+Noe Olivier -- July 2026
 
 Defines how to run an experiment for Quantum WalkScore
 """
@@ -21,18 +21,19 @@ def run(device, **params):
     num_walk = params["num_walk"]
     num_aa = params["num_aa"]
     num_instances = params["num_instances"]
-    num_shots = params["num_shots"]
+    num_batches = params["num_batches"]
+    num_shots = params["num_shots_per_circuit"]
 
     list_seq_params = params.get("seq_params", None)
 
-    check_parameters_value(graph_type, n, d, num_walk, num_aa, num_instances, num_shots, list_seq_params)
+    check_parameters_value(graph_type, n, d, num_walk, num_aa, num_instances, num_batches, num_shots, list_seq_params)
 
     if device in _IBM_REAL_DEVICES:
         hardware = IBMRealDevice(device)
-        results = run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_shots, list_seq_params)
+        results = run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_batches, num_shots, list_seq_params)
     elif device in _IBM_SIMULATORS:
         hardware = IBMSimulator(device)
-        results = run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_shots, list_seq_params)
+        results = run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_batches, num_shots, list_seq_params)
     else:
         raise NotImplementedError(
             f"Benchmark QWS is not currently implemented on {device=} : consider adding a new device.\nCurrently available:\n{_IBM_REAL_DEVICES=}\n{_IBM_SIMULATORS=}"
@@ -41,7 +42,7 @@ def run(device, **params):
     return results
 
 
-def run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_shots, list_seq_params=None):
+def run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_batches, num_shots, list_seq_params=None):
     """
     Run experiment(s) on a qiskit simulator/emulator.
 
@@ -53,7 +54,8 @@ def run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_
         .num_walk           -- int or list[int], number of DTQW steps for each experiment
         .num_aa             -- int or list[int], number of AA iterations for each experiment
         .num_instances      -- int, number of instances for each experiment
-        .num_shots          -- int, number of shots for each experiment
+        .num_batches        -- int, number of batches for each instance
+        .num_shots          -- int, number of shots for each circuit run
         .list_seq_params    -- list[dict], list of sequence parameters for each experiment
 
     Returns:
@@ -61,22 +63,23 @@ def run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_
     """
     if list_seq_params is None:
         
-        destination_states, num_dims = get_destination_states(graph_type, n, d, num_instances)
+        destination_states, num_dims = get_destination_states(graph_type, n, d, num_instances, num_batches)
         circuits = []
-        for i in range(num_instances):
-            circuit = build_circuit_qiskit(n, num_dims, num_walk, num_aa, destination_states[i])
+
+        for target_state in destination_states:
+            circuit = build_circuit_qiskit(n, num_dims, num_walk, num_aa, target_state)
             circuits.append(circuit)
 
         all_counts = hardware.compute(circuits, num_shots)
 
         result = {}
         for k, counts in enumerate(all_counts):
-            state = destination_states[k]
-            success_proba = compute_success_proba(counts, state, num_shots)
-            if state not in result.keys():
-                result[state] = [success_proba]
+            target_state = destination_states[k]
+            success_proba = compute_success_proba(counts, target_state, num_shots)
+            if target_state not in result.keys():
+                result[target_state] = [success_proba]
             else:
-                result[state].append(success_proba)
+                result[target_state].append(success_proba)
 
         exp_data = {
             "filetype": "experiment",
@@ -89,6 +92,7 @@ def run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_
                 "num_walk": num_walk,
                 "num_aa": num_aa,
                 "num_instances": num_instances,
+                "num_batches": num_batches,
                 "num_shots": num_shots
             },
             "result": result
@@ -113,23 +117,23 @@ def run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_
             if isinstance(num_aa, list):
                 n_aa = num_aa[k]
 
-            destination_states, num_dims = get_destination_states(graph_type, n, d, num_instances)
+            destination_states, num_dims = get_destination_states(graph_type, n, d, num_instances, num_batches)
             circuits = []
 
-            for i in range(num_instances):
-                circuit = build_circuit_qiskit(n, num_dims, n_walk, n_aa, destination_states[i])
+            for target_state in destination_states:
+                circuit = build_circuit_qiskit(n, num_dims, n_walk, n_aa, target_state)
                 circuits.append(circuit)
 
             all_counts = hardware.compute(circuits, num_shots)
 
             result = {}
             for k, counts in enumerate(all_counts):
-                state = destination_states[k]
-                success_proba = compute_success_proba(counts, state, num_shots)
-                if state not in result.keys():
-                    result[state] = [success_proba]
+                target_state = destination_states[k]
+                success_proba = compute_success_proba(counts, target_state, num_shots)
+                if target_state not in result.keys():
+                    result[target_state] = [success_proba]
                 else:
-                    result[state].append(success_proba)
+                    result[target_state].append(success_proba)
 
             pbm_size = '(' + str(n) +',' + str(d) + ')'
             results[pbm_size] = result
@@ -143,6 +147,7 @@ def run_qiskit(hardware, graph_type, n, d, num_walk, num_aa, num_instances, num_
                 "num_walk": num_walk,
                 "num_aa": num_aa,
                 "num_instances": num_instances,
+                "num_batches": num_batches,
                 "num_shots": num_shots
             },
             "results": results

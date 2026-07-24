@@ -1,5 +1,5 @@
 """
-Noe Olivier -- March 2026
+Noe Olivier -- July 2026
 """
 
 from bacq_core.parameters import Parameter, ParameterSet
@@ -17,7 +17,8 @@ parameters = ParameterSet([
     Parameter(name="num_walk", constraint=int or list[int], description="Number of discrete-time quantum walk steps"),
     Parameter(name="num_aa", constraint=int or list[int], description="Number of amplitude amplification iterations"),
     Parameter(name="num_instances", constraint=int, description="Number of instances"),
-    Parameter(name="num_shots", constraint=int, description="Number of shots"),
+    Parameter(name="num_batches", constraint=int, description="Number of batches"),    
+    Parameter(name="num_shots_per_circuit", constraint=int, description="Number of shots per circuit run"),
 ])
 
 sequence_parameters = ParameterSet([

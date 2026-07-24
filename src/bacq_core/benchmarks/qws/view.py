@@ -1,5 +1,5 @@
 """
-Noe Olivier -- March 2026
+Noe Olivier -- July 2026
 
 Defines how to display the QWS benchmark results.
 """
@@ -18,6 +18,7 @@ Benchmark parameters:
 - Number of DTQW steps: {num_walk}
 - Number of AA iterations: {num_aa}
 - Number of instances: {num_instances}
+- Number of batches: {num_batches}
 - Number of shots: {num_shots}
 
 Benchmark result:
@@ -38,6 +39,7 @@ Date experiments: {date}
 Benchmark parameters:
 - Graph type: {graph_type}
 - Number of instances: {num_instances}
+- Number of batches: {num_batches}
 - Number of shots: {num_shots}
 
 Benchmark results:
