@@ -19,7 +19,7 @@ Benchmark parameters:
 - Number of AA iterations: {num_aa}
 - Number of instances: {num_instances}
 - Number of batches: {num_batches}
-- Number of shots: {num_shots}
+- Number of shots: {num_shots_per_circuit}
 
 Benchmark result:
 - Metric: {metric:.3f}
@@ -40,7 +40,7 @@ Benchmark parameters:
 - Graph type: {graph_type}
 - Number of instances: {num_instances}
 - Number of batches: {num_batches}
-- Number of shots: {num_shots}
+- Number of shots: {num_shots_per_circuit}
 
 Benchmark results:
 """
