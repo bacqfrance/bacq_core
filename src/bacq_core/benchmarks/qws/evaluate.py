@@ -67,8 +67,7 @@ def compute_score(results, graph_type, stop_on_fail=False):
     score = 0
 
     for key, result in results.items():
-        n = int(key[1])
-        d = int(key[3])
+        n, d = get_n_d_from_pbmsize(key)
 
         metric = compute_metric(result, graph_type)
         success = compute_success(metric, d, graph_type)
@@ -103,3 +102,31 @@ def compute_qws(graph_type, n, d):
         raise ValueError(f"Parameter {graph_type=} is not valid. Expected 'cycle' or '2D-torus'.")
 
     return qws
+
+def get_n_d_from_pbmsize(pbmsize):
+    """
+    Extract int(n) & int(d) from '(n,d)'.
+    """
+    n = ""
+    d = ""
+    k_n = 0
+    k_d = 0
+
+    for char in pbmsize:
+        if char == ")":
+            k_d = 0
+
+        if k_d == 1:
+            d += char
+
+        if char == ",":
+            k_n = 0
+            k_d = 1
+
+        if k_n == 1:
+            n += char
+
+        if char == "(":
+            k_n = 1
+    
+    return int(n), int(d)
