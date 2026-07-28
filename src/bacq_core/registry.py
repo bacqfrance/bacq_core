@@ -3,9 +3,11 @@ List of all available benchmark protocols.
 """
 
 from benchmarks import qws
+from benchmarks import vqls
 
 benchmarks_registry = {
     "qws": qws,
+    "vqls": vqls,
 }
 
 
