@@ -184,7 +184,7 @@ def display_text_seq(benchmark, data):
 
     for key, result in data["results"]["history"].items():
         text += f"""
-       - (n,d) = {key}: metric = {result['metric']:.3f} (test: {result['success']})
+       - Pbm size {key}: metric = {result['metric']:.3f} (test: {result['success']})
         """
 
     text += f"""
