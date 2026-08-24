@@ -49,13 +49,13 @@ def run_benchmark(benchmark, device, parameters, exp_data=None):
     Runs the benchmark for a single experiment.
 
     Arguments:
-        .benchmark      -- str, name of the benchmark protoool
+        .benchmark      -- str, name of the benchmark protocol
         .device         -- str, name of the device
         .parameters     -- dict, contains all protocol parameters and values
-        .exp_data       -- dict, content experiment data (if 'experiment' as input file)
+        .exp_data       -- dict, content of experiment data (if 'experiment' as input file)
 
     Returns:
-        .benchmark_data     -- dict, content of the output benchmark 'result' file
+        .benchmark_data     -- dict, content of the benchmark output 'result' file
     """
     benchmark_module = get_benchmark_module(benchmark)
     date = datetime.now().strftime("%Y-%m-%d_%Hh%M")
@@ -100,10 +100,10 @@ def run_benchmark_sequence(benchmark, device, parameters, exp_data_seq=None, seq
     Runs the benchmark for a series of experiments.
 
     Arguments:
-        .benchmark              -- str, name of the benchmark protoool
+        .benchmark              -- str, name of the benchmark protocol
         .device                 -- str, name of the device
         .parameters             -- dict, contains all protocol parameters and values
-        .exp_data_seq           -- dict, content experiments data (if 'experiment_seq' as input file)
+        .exp_data_seq           -- dict, content of experiments data (if 'experiment_seq' as input file)
         .sequence_parameters    -- dict, contains variable parameters (if 'protocol_seq' as input file)
 
     Returns:
