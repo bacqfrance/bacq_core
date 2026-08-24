@@ -1,6 +1,14 @@
 # Quantum WalkScore (QWS) Benchmark
 This folder includes QWS-specific scripts.
 
+Reference paper : (to be added)
+
+## The Graph Nodefinding problem
+[To be completed]
+
+## Metrics definition and Score evaluation
+[To be completed]
+
 ## Code structure
 Some files are required for all benchmarks so that these benchmarks can be successfully evaluated and experiments successfully conducted.
 - `__init__.py`: defines benchmark-specific protocol parameters (here QWS) based on the benchmark-agnostic parameter class.
@@ -18,10 +26,6 @@ Additional benchmark-specific files are proposed:
 Depending on the selected hardware platform, the end user is welcome to propose and additional file (i.e. helpers_nameplatform using myqlm, cirq, etc...) and develop the algorithm construction intended for a new platform and use it for the benchmark evaluation.
 
 ## How to use within the BACQ library
-The protocol details are given in the associated package `qws`.
-
-*[add link to repository]*
-
 This folder proposes an implementation that allows for the direct evaluation of qiskit-available hardware, especially IBM QPU.
 
 **Run benchmark experiments on already implemented QPU:**
