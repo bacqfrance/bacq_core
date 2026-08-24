@@ -24,19 +24,20 @@ Further reading :
 
 ## Metrics Overview
 - **Quantum Physics Simulation**
-    - *Many-body Quantum Score (MBQS)*: based on a quench for the transverse-field Ising model [arxiv.org/abs/2601.03461](https://arxiv.org/abs/2601.03461)
-    - *Low-level metrics*: Quench for the BCS model
+    - *BACQ-PS-MBQS*: Many-body Quantum Score based on a quench for the transverse-field Ising model [arxiv.org/abs/2601.03461](https://arxiv.org/abs/2601.03461)
+    - *BACQ-PS-QBCS*: Quench for the BCS model
 - **Optimization**
-    - *Q-score*: [MaxCut][1]
-    - *G-score*: [Maximum Cardinality Matching on the $G_n$ series][2]
-    - *Quantum WalkScore (QWS)*: Graph Pathfinding on cycle/2D-torus graphs
+    - *BACQ-OP-QSCORE*: [MaxCut][1]
+    - *BACQ-OP-GSCORE*: [Maximum Cardinality Matching on the $G_n$ series][2]
+    - *BACQ-OP-QWS*: Quantum WalkScore - Graph Nodefinding on cycle/2D-torus graphs
 - **Linear Systems Solving**
-    - *1-bit resolution*: Least square QUBO formulation
-    - *Precision*: Laplace's equation (1D/2D) with VQLS
+    - *BACQ-LS-LS1B*: Least square QUBO formulation
+    - *BACQ-LS-LSVol*: Least square QUBO formulation
+    - *BACQ-LS-VQLS*: Laplace's equation (1D/2D) with VQLS
 - **Prime Factorization**
-    - *Number of bits*: Factorization problem
+    - *BACQ-PF-PRIME*: Factorization problem
 - **Energetic Performance**
-    - *Metric Noise Resources (MNR)*: Energetic consumption with VQE.
+    - *BACQ-EP-MNR*: Metric Noise Resources - Energetic consumption with VQE.
     
 [1]: https://ieeexplore.ieee.org/document/9459509
 [2]: https://www.frontiersin.org/journals/computer-science/articles/10.3389/fcomp.2024.1286057/full
@@ -61,7 +62,7 @@ In a virtual environment, install the bacq_core package
 pip install bacq_core
 ```
 
-Proceed the same way to install the relevant benchmark package (see their documentation).
+Proceed the same way to install the relevant benchmark package when applicable (see their documentation).
 
 ## Run a benchmark
 **From a protocol description** (i.e run with experiments on hardware)
