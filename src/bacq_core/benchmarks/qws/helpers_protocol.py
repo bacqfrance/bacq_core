@@ -14,8 +14,9 @@ _MIN_D = 1
 _GRAPH_TYPES = ["cycle", "2D-torus"]
 
 def sequence_generator(graph_type, n_min, d_min, n_max, d_max):
-    '''
-    '''
+    """
+    Generate the list of sequence parameters, i.e. problem sizes.
+    """
     if n_min < _MIN_N:
         raise ValueError(f"Sequence parameter {n_min=} must be at least equal to {_MIN_N}.")
 
@@ -73,8 +74,9 @@ def sequence_generator(graph_type, n_min, d_min, n_max, d_max):
 
 
 def compute_success_proba(counts, state, num_shots):
-    '''
-    '''
+    """
+    Computes the success probability.
+    """
     num_shots_exp = sum(counts.values())
     if num_shots_exp != num_shots:
         raise ValueError(f"Reported counts does not have the right number of shots.\n{num_shots=} vs reported_counts={num_shots_exp}")
@@ -88,8 +90,9 @@ def compute_success_proba(counts, state, num_shots):
 
 
 def check_parameters_value(graph_type, n, d, num_walk, num_aa, num_instances, num_batches, num_shots, list_seq_params):
-    '''
-    '''
+    """
+    Checks that input parameters value are protocol-valid.
+    """
     check_num_instances(num_instances, graph_type)
     check_num_shots(num_shots, num_batches)
 
@@ -119,8 +122,9 @@ def check_parameters_value(graph_type, n, d, num_walk, num_aa, num_instances, nu
 
 
 def check_num_instances(num_instances, graph_type):
-    '''
-    '''
+    """
+    Checks type and value of input number of instances.
+    """
     if not isinstance(num_instances, int):
         raise TypeError('Parameter num_instances must be <int>.')
 
@@ -141,8 +145,9 @@ def check_num_instances(num_instances, graph_type):
 
 
 def check_num_shots(num_shots, num_batches):
-    '''
-    ''' 
+    """
+    Checks type and value of input number of shots per circuit.
+    """
     if not isinstance(num_shots, int):
         raise TypeError('Parameter num_shots_per_circuit must be <int>.')
     if not isinstance(num_batches, int):
@@ -157,8 +162,9 @@ def check_num_shots(num_shots, num_batches):
 
 
 def check_n_d(graph_type, n, d):
-    '''
-    '''
+    """
+    Checks type and value of input number of qubits and distance.
+    """
     if not isinstance(n, int):
         raise TypeError('Parameter n must be <int>.')
 
@@ -189,8 +195,9 @@ def check_n_d(graph_type, n, d):
 
 
 def check_num_walk(num_walk, n, d, size=0):
-    '''
-    '''
+    """
+    Checks type and value of input number of DTQW steps.
+    """
     if size == 0:
         if not isinstance(num_walk, int):
             raise TypeError(f'Parameter num_walk is ({type(num_walk)}) but expected to be <int>.')
@@ -210,8 +217,9 @@ def check_num_walk(num_walk, n, d, size=0):
 
 
 def check_num_aa(num_aa, size=0):
-    '''
-    '''
+    """
+    Checks type and value of input number of amplitude amplification iterations.
+    """
     if size == 0:
         if not isinstance(num_aa, int):
             raise TypeError(f'Parameter num_aa is ({type(num_aa)}) but expected to be <int>.')

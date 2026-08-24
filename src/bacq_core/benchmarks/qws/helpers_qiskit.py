@@ -8,7 +8,7 @@ import numpy as np
 from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
 
 def build_circuit_qiskit(num_qubits, num_dims, num_walk, num_aa, marked_state, barrier=False):
-    '''
+    """
     Construct a qiskit circuit for DTQW + AA algorithm
 
     Arguments:
@@ -17,10 +17,11 @@ def build_circuit_qiskit(num_qubits, num_dims, num_walk, num_aa, marked_state, b
         .num_walk       -- int, number of discrete-time quantum walk steps
         .num_aa         -- int, number of amplitude amplification iterations
         .marked_state   -- str, bitstring of the state to amplify
+        .barrier	-- bool, apply qiskit barrier in compilation or not
 
     Returns:
         .circuit        -- qiskit circuit
-    '''
+    """
     num_pos_qubits = num_dims * num_qubits
     num_coin_qubits = num_dims
 

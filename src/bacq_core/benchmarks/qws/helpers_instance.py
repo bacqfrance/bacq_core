@@ -9,7 +9,7 @@ import numpy as np
 
 
 def get_destination_states(graph_type, n, d, num_instances=1, num_batches=1):
-    '''
+    """
     Select/Sample destination nodes states from graph instances.
 
     Arguments:
@@ -22,7 +22,7 @@ def get_destination_states(graph_type, n, d, num_instances=1, num_batches=1):
     
     Returns:
         .destination_states -- list[str], bitstring of states of destination nodes
-    '''
+    """
     num_dims = 0
     
     match graph_type:
