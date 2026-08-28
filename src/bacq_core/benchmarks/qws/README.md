@@ -21,15 +21,15 @@ The criteria for a successful benchmark test on a given instance $(n,d)$, descri
 ## Metrics definition and Score evaluation
 The metric is given by the mean success probability from all experiments conducted based on the protocol's input parameter requirements.
 
-The overall scores $QWS_\text{cycle}$ and $QWS_\text{torus}$ quantify the largest problem size until which the success criteria has been met without failure.
+The overall scores $\text{QWS}_\text{cycle}$ and $\text{QWS}_\text{torus}$ quantify the largest problem size until which the success criteria has been met without failure.
 Let $(n_\text{max}, d_\text{max})$ be the corresponding problem size.
 The QWS score is given by
 
 ```math
-QWS_\text{cycle} = 2^{n_\text{max}-1} + d_\text{max}
+\text{QWS}_\text{cycle} = 2^{n_\text{max}-1} + d_\text{max}
 ```
 ```math
-QWS_\text{torus} = 2^{n_\text{max}} + d_\text{max}
+\text{QWS}_\text{torus} = 2^{n_\text{max}} + d_\text{max}
 ```
 
 ## Code structure
