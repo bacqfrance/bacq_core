@@ -4,8 +4,8 @@ The benchmark evaluation requires one input file, which can be the description o
 In particular, this `examples` folder contains all types of input files for the benchmark evaluation:
 - `protocol_benchmarkname.json`: benchmark protocol for evaluating a single problem size instance,
 - `protocol_seq_benchmarkname.json`: benchmark protocol for evaluating a series of problem sizes instances,
-- `expdata_benchmarkname_devicename_date.json`: experimental result for a single problem size instance,
-- `expdata_seq_benchmarkname_devicename_date.json`: experimental results for a series of problem sizes instances.
+- `expdata_benchmarkname.json`: experimental result for a single problem size instance,
+- `expdata_seq_benchmarkname.json`: experimental results for a series of problem sizes instances.
 
 The files provided here correspond to example files for the QWS benchmark on *IBM basic_simulator*.
 
