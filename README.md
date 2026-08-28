@@ -33,7 +33,7 @@ Further reading :
 - **Linear Systems Solving**
     - *BACQ-LS-LS1B*: Least square QUBO formulation
     - *BACQ-LS-LSVol*: Least square QUBO formulation
-    - *BACQ-LS-VQLS*: Laplace's equation (1D/2D) with VQLS
+    - *BACQ-LS-VQLS*: Laplace's equation (1D) with VQLS
 - **Prime Factorization**
     - *BACQ-PF-PRIME*: Factorization problem
 - **Energetic Performance**
