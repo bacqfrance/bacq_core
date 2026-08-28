@@ -9,8 +9,8 @@ The graph nodefinding problem consists in finding a target node $v_t$ by moving 
 
 For benchmarking purposes, we consider two graph structures: cycle graphs and 2D-torus graphs.
 
-![cycle](_images/fig_cycle_graphs.png)
-<img src="_images/fig_torus_graphs.png" alt="torus" width="200"/>
+<img src="_images/fig_cycle_graphs.png" alt="cycle" width="300"/>
+<img src="_images/fig_torus_graphs.png" alt="torus" width="300"/>
 
 Let $d$ be the distance between the source and target nodes.
 The criteria for a successful benchmark test on a given instance $(n,d)$, described by the number of nodes $(2^n)$ and the distance $d$, is:
@@ -26,7 +26,9 @@ Let $(n_\text{max}, d_\text{max})$ be the corresponding problem size.
 The QWS score is given by
 
 ```math
-QWS_\text{cycle} = 2^{n_\text{max}-1} + d_\text{max} \
+QWS_\text{cycle} = 2^{n_\text{max}-1} + d_\text{max}
+```
+```math
 QWS_\text{torus} = 2^{n_\text{max}} + d_\text{max}
 ```
 
