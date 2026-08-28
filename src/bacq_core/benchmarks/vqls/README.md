@@ -28,7 +28,7 @@ b(i) = V \quad \forall i.
 
 The criteria for success on a problem instance of size $n$, i.e. a matrix $A$ of size $2^n\times 2^n$, is:
 
-*Finding $x_\text{quantum}$ such that $1-F = 1-|\langle x_\text{quantum}x_\text{sol}\rangle| \leq \varepsilon$.*
+*Finding $x_\text{quantum}$ such that $1-F = 1-|\langle x_\text{quantum}|x_\text{sol}\rangle| \leq \varepsilon$.*
 
 In this protocol, $\varepsilon$ is arbitrarily set to 0.05.
 
