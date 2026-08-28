@@ -38,7 +38,7 @@ def compute_metric(result, num_shots_solution):
         sol_quantum[k] = np.sqrt(counts[bitstring] / num_shots_solution)
     
     ## Compute fidelity
-    metric_fidelity = np.abs(np.dot(sol_quantum, sol_classical))**2    
+    metric_fidelity = np.abs(np.dot(sol_quantum, sol_classical))   
     
     return float(metric_fidelity)
 
