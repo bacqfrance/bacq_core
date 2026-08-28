@@ -2,10 +2,41 @@
 This folder includes VQLS-specific scripts.
 
 ## The 1D-Poisson equation
-[To be completed]
+For benchmarking purposes, we consider the steady-state hea equation which can be described by the 1D Laplace equation, with Dirichlet boundary conditions, such that
+
+```math
+\forall x\in [0,L], \quad -\nabla^2u(x) = V \quad \text{ with } \quad u(0) = u(L) = 0.
+```
+
+Upon discretization of the domain into a grid of $N$ cells using the finite difference method, this problem corresponds to solving the linear system $Ax = b$ with
+
+```math
+A(i,j) = 2 \quad \text{ if } i=j,
+```
+```math
+A(i,j) = -1 \quad \text{ if } |i-j|=1,
+```
+```math
+A(i,j) = 2 \quad \text{ otherwise}
+```
+
+and
+
+```math
+b(i) = V \quad \forall i.
+```
+
+The criteria for success on a problem instance of size $n$, i.e. a matrix $A$ of size $2^n\times 2^n$, is:
+
+*
+Finding $x_\text{quantum}$ such that $1-F = 1-|\bra{x_\text{quantum}}\ket{x_\text{sol}}| \leq \varepsilon
+*
+where $\varepsilon$ is arbitrarily set to 0.05.
 
 ## Metrics definition and Score evaluation
-[To be completed]
+The metric is therefore the fidelity between the observed quantum state resulting from solving the linear system with VQLS, and the state corresponding to the theoretical classical solution.
+
+The overall score is defined as the largest problem size $n$ for which the criteria for success is successfully met before a first failure.
 
 ## Code structure
 Some files are required for all benchmarks so that these benchmarks can be successfully evaluated and experiments successfully conducted.
