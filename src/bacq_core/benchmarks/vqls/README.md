@@ -28,10 +28,9 @@ b(i) = V \quad \forall i.
 
 The criteria for success on a problem instance of size $n$, i.e. a matrix $A$ of size $2^n\times 2^n$, is:
 
-*
-Finding $x_\text{quantum}$ such that $1-F = 1-|\bra{x_\text{quantum}}\ket{x_\text{sol}}| \leq \varepsilon
-*
-where $\varepsilon$ is arbitrarily set to 0.05.
+*Finding $x_\text{quantum}$ such that $1-F = 1-|\bra{x_\text{quantum}}\ket{x_\text{sol}}| \leq \varepsilon$.*
+
+In this protocol, $\varepsilon$ is arbitrarily set to 0.05.
 
 ## Metrics definition and Score evaluation
 The metric is therefore the fidelity between the observed quantum state resulting from solving the linear system with VQLS, and the state corresponding to the theoretical classical solution.
