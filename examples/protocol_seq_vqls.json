@@ -1,0 +1,18 @@
+{
+    "filetype": "protocol_seq",
+    "benchmark": "vqls",
+    "device": "AerSimulator",
+    "parameters": {
+        "optimizer": "COBYLA",
+        "max_iters": [200, 500, 500],
+        "tol": 1e-6,
+        "ansatz": "ansatz_4",
+        "num_layers": 2,
+        "num_shots": 10000,
+        "num_shots_solution": 10000
+    },
+    "sequence_parameters": {
+        "n_min": 2,
+        "n_max": 4
+    }
+}
