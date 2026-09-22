@@ -1,7 +1,7 @@
 # Quantum WalkScore (QWS) Benchmark
 This folder includes QWS-specific scripts.
 
-Reference paper : (coming soon)
+Reference paper : (preprint) <https://arxiv.org/abs/2609.19931>
 
 ## The Graph Nodefinding problem
 Let $G = (V,E)$ be an undirected graph where $V=\{v_0, v_1, \ldots, v_m\}$ is the set of vertices/nodes and $E$ the set of edges.
