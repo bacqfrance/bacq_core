@@ -48,7 +48,9 @@ def build_ansatz_circuit(num_qubits, name, num_layers=1):
             pass
 
         case "ansatz_4":
-            ## Based on circuit 4 from (S.Sim et al., 2019) : https://doi.org/10.1002/qute.201900070
+            '''
+            Based on circuit 4 from (S.Sim et al., 2019) : https://doi.org/10.1002/qute.201900070
+            '''
             num_params = (3 * num_qubits - 1)* num_layers
             params = ParameterVector("theta", num_params)
 
