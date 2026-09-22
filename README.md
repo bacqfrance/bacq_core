@@ -18,18 +18,19 @@ A particular focus is also set on benchmarking *energetic performance* of quantu
 Metrics are defined in order to address various quantum hardware, from NISQ machines to Fault-Tolerant hardware, and various paradigms (universal gate-based, analog devices, ...).
 
 Further reading : 
-- BACQ website: (<https://www.lne.fr/en/metriqs-france/projet-bacq>)
-- BACQ publications: (<https://www.lne.fr/en/metriqs-france/communications#publi>)
-- arXiv publication : [BACQ-Application-oriented Benchmarks for Quantum Computing](https://arxiv.org/pdf/2403.12205)
+- BACQ website: <https://www.lne.fr/en/metriqs-france/projet-bacq>
+- BACQ publications: <https://www.lne.fr/en/metriqs-france/communications#publi>
+- arXiv paper : [BACQ-Application-oriented Benchmarks for Quantum Computing](https://arxiv.org/pdf/2403.12205)
 
 ## Metrics Overview
+List of the proposed metrics and associated papers or preprints.
 - **Quantum Physics Simulation**
-    - *BACQ-PS-MBQS*: Many-body Quantum Score based on a quench for the transverse-field Ising model [arxiv.org/abs/2601.03461](https://arxiv.org/abs/2601.03461)
+    - *BACQ-PS-MBQS*: [Many-body Quantum Score][3] based on a quench for the transverse-field Ising model
     - *BACQ-PS-QBCS*: Quench for the BCS model
 - **Optimization**
-    - *BACQ-OP-QSCORE*: [MaxCut][1]
+    - *BACQ-OP-QSCORE*: [Q-score MaxCut][1]
     - *BACQ-OP-GSCORE*: [Maximum Cardinality Matching on the $G_n$ series][2]
-    - *BACQ-OP-QWS*: Quantum WalkScore - Graph Nodefinding on cycle/2D-torus graphs
+    - *BACQ-OP-QWS*: [Quantum WalkScore][4] - Graph Nodefinding on cycle/2D-torus graphs
 - **Linear Systems Solving**
     - *BACQ-LS-LS1B*: Least square QUBO formulation
     - *BACQ-LS-LSVol*: Least square QUBO formulation
@@ -42,6 +43,7 @@ Further reading :
 [1]: https://ieeexplore.ieee.org/document/9459509
 [2]: https://www.frontiersin.org/journals/computer-science/articles/10.3389/fcomp.2024.1286057/full
 [3]: https://arxiv.org/abs/2601.03461
+[4]: https://arxiv.org/abs/2609.19931
 
 ## Repository Structure
 The repository `bacq/` is designed as a homogeneous and flexible structure for the integration of numerous application-oriented benchmarks, and the realisation of their protocol numerically or experimentally on quantum hardware.
@@ -111,6 +113,9 @@ The main contributors are
 As part of the MetriQs-France program, this work is supported by France 2030 under the French National Research Agency grant number ANR-22-QMET-0002.
 
 ## License
-**TO BE UPDATED:** For open source projects, say how it is licensed.
+Distribution license **EUPL v1.2**.
+
+See the `LICENSE.md` file for the full license text.
+Reference: <https://interoperable-europe.ec.europa.eu/licence/european-union-public-licence-version-12-eupl>
 
 
