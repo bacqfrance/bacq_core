@@ -18,6 +18,13 @@ authors = [
 readme = "README.md"
 keywords = ["benchmark", "application-oriented", "quantum computing", "bacq"]
 requires-python = ">=3.10"
+dependencies = [
+  "qiskit>=1.4.2",
+  "qiskit-aer>=0.16.1",
+  "qiskit-ibm-runtime>=0.38.0",
+  "numpy>=2.2.2",
+  "networkx>=3.0",
+]
 classifiers = [
   "Private :: Do Not Upload",
   "Development Status :: 4-Beta",
