@@ -107,7 +107,8 @@ def create_dtqw_circuit(num_pos_qubits, num_coin_qubits, num_walk, barrier):
 
 def get_shift_1D(num_pos_qubits, num_coin_qubits, barrier):
     """
-    Construct a circuit for the discrete-time quantum walk shift operator (1D)
+    Construct a circuit for the discrete-time quantum walk shift operator (1D).
+    Circuit based on increment/decrement implementation from (B.L. Douglas and J.B. Wang, 2009) : https://doi.org/10.1103/PhysRevA.79.052335
 
     Arguments:
         .num_pos_qubits     -- int, number of qubits for position encoding
