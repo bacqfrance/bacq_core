@@ -1,0 +1,54 @@
+{
+    "filetype": "protocol",
+    "benchmark": "mnr",
+    "device": "FakeMarrakesh",
+    "parameters": {
+        "n": 5,
+        "layers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+        ],
+        "num_seeds": 20,
+        "max_iters": 10000,
+        "tol": 1e-08,
+        "num_shots": 1024,
+        "zne_scale_factors": [
+            1,
+            3
+        ],
+        "num_twirls": 8,
+        "mu_fit_window": 25,
+        "alpha": null,
+        "energy_shots": 1000,
+        "classical_efficiency": 72733000000.0,
+        "flops_prefactor": 703.336,
+        "flops_exponent": 2.8722,
+        "cryo_efficiency": 0.1,
+        "stage_temperatures": [
+            0.006,
+            0.9,
+            4.0,
+            50.0,
+            293.15
+        ],
+        "attenuation_range_db": [
+            26.0,
+            60.0
+        ],
+        "gate_time_range_ns": [
+            10.0,
+            1000.0
+        ],
+        "floor_margin": 1.01,
+        "target_multipliers": [
+            1.05,
+            1.1,
+            1.2,
+            1.35
+        ]
+    }
+}

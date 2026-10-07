@@ -1,13 +1,14 @@
 """
 Define the IBMSimulator device.
 
-This emulates an IBM gate-based device, and returns only counts.
+This emulates an IBM gate-based device, and returns counts or expectation values.
 """
 
+import numpy as np
 from qiskit_ibm_runtime import QiskitRuntimeService
 from qiskit_aer import AerSimulator
 from qiskit_ibm_runtime.fake_provider import FakeMarrakesh
-from qiskit_ibm_runtime import Batch, Session, SamplerV2 as Sampler
+from qiskit_ibm_runtime import Batch, Session, SamplerV2 as Sampler, EstimatorV2 as Estimator
 from qiskit.transpiler import generate_preset_pass_manager
 
 _IBM_SIMULATORS = [
@@ -36,8 +37,30 @@ class IBMSimulator:
                 )
 
         self.name = name
-        
-    
+        self._noisy_simulator = None
+
+
+    def estimate(self, pubs, num_shots):
+        """
+        Estimate expectation values of circuits already transpiled for the device (no further transpilation).
+
+        Arguments:
+            .pubs       -- list(tuple), (transpiled circuit, observable with the circuit layout applied)
+            .num_shots  -- int, number of shots, setting the estimator precision 1/sqrt(num_shots)
+
+        Returns:
+            .values -- list(float), expectation values
+        """
+        if self._noisy_simulator is None:
+            self._noisy_simulator = AerSimulator(method="statevector").from_backend(self.device) if self.name != "AerSimulator" else self.device
+
+        estimator = Estimator(mode=self._noisy_simulator)
+        estimator.options.default_precision = 1 / np.sqrt(num_shots)
+        job = estimator.run(pubs)
+
+        return [float(np.squeeze(result.data.evs)) for result in job.result()]
+
+
     def compute(self, circuits, num_shots, params=[], use_session=False, optimization_level=1):
         """
         Run circuits on the device.

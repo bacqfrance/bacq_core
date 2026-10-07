@@ -38,12 +38,14 @@ List of the proposed metrics and associated papers or preprints.
 - **Prime Factorization**
     - *BACQ-PF-PRIME*: Factorization problem
 - **Energetic Performance**
-    - *BACQ-EP-MNR*: Metric Noise Resources - Energetic consumption with VQE.
+    - *BACQ-EP-MNR*: [Metric Noise Resources][5] - Energetic consumption with VQE ([reference code][6]).
     
 [1]: https://ieeexplore.ieee.org/document/9459509
 [2]: https://www.frontiersin.org/journals/computer-science/articles/10.3389/fcomp.2024.1286057/full
 [3]: https://arxiv.org/abs/2601.03461
 [4]: https://arxiv.org/abs/2609.19931
+[5]: https://arxiv.org/abs/2606.20153
+[6]: https://github.com/hvermaQ/VQE
 
 ## Repository Structure
 The repository `bacq/` is designed as a homogeneous and flexible structure for the integration of numerous application-oriented benchmarks, and the realisation of their protocol numerically or experimentally on quantum hardware.

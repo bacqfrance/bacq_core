@@ -23,6 +23,7 @@ dependencies = [
   "qiskit-aer>=0.16.1",
   "qiskit-ibm-runtime>=0.38.0",
   "numpy>=2.2.2",
+  "scipy>=1.13",
   "networkx>=3.0",
 ]
 classifiers = [
