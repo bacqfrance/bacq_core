@@ -107,6 +107,7 @@ The main contributors are
 - Grégoire MISGUICH, CEA, Institut de thysique théorique, France
 - Harold ERBIN, CEA Institut de physique théorique, France
 - Kyrylo SNIZHKO, CEA PHELIQS, France
+- Sidhartha Shankar DASH, CEA PHELIQS, France
 - Stéphane LOUISE, CEA-List, France
 - Harshit VERMA, CNRS, Research Lab MajuLab, Singapore
 
