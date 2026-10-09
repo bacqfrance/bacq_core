@@ -19,7 +19,7 @@ When the data are bitstrings (or correlations with errors), an error $\delta P_2
 - *undecided* if $P_2 \le \epsilon \le P_2 + \delta P_2$,
 - *failed* if $P_2 > \epsilon$.
 
-Only *success* is reported as `success: True`; the three-valued outcome is kept as `status` in the score history.
+Only *success* is reported as `success: True`. In the score history, each system size also records the error $\delta P_2$ as `metric_err` (0 for correlations given without errors) and the three-valued outcome as `status` (`"success"`, `"undecided"` or `"failed"`).
 
 The score $\text{MBQS}_\psi$ is the largest system size $L$ such that the test is a success for all sizes up to $L$ in the sequence.
 
@@ -30,13 +30,18 @@ Additional benchmark-specific files:
 - `helpers_protocol.py`: defines functions to ensure the MBQS protocol is well applied.
 - `helpers_pulser.py`: defines functions to build the quench as a Pulser sequence for neutral atoms (Rydberg Hamiltonian mapped to the critical Ising Hamiltonian, ring register, global EOM pulse). It also defines and checks the device options accepted for neutral-atom devices (see below).
 
-Hardware: `hardware/pulser_emulator.py` defines the `QutipEmulator` and `MPSBackend` (requires `emu-mps`) emulators.
+Hardware: `hardware/pulser_emulator.py` defines the `QutipEmulator` and `MPSBackend` (requires the `[mbqs-mps]` optional dependencies, see below) emulators.
 
 ## How to use within the BACQ library
 Install the optional dependencies (requires Python 3.12):
 ```bash
 pip install -e '.[mbqs]'
 ```
+To also use the `MPSBackend` emulator (tensor networks, for larger $L$), install instead:
+```bash
+pip install -e '.[mbqs-mps]'
+```
+This pulls PyTorch, which on Linux defaults to the CUDA build (several GB); for a CPU-only install, add `--extra-index-url https://download.pytorch.org/whl/cpu`.
 
 **Protocol parameters** (independent of the hardware):
 - `state`: `"down"` or `"plus"` (only `"down"` can be run on neutral atoms for now),
@@ -54,8 +59,10 @@ For neutral-atom devices (Pulser emulators), the only device option is:
 Any other device option raises an error. The device options actually used are recorded in the `"device_options"` entry of the experiment data file.
 
 **Experiment data:** the `result` for one size (or each entry of `results`, keyed by `L`) contains either
-- `"samples"`: measured bitstrings and counts, e.g. `{"0000": 812, ...}`, or
-- `"correlations"`: connected 2-point functions, e.g. `{"(0, 1)": 0.41, "(0, 2)": 0.36}`, and optionally `"correlations_err"`.
+- `"samples"`: measured bitstrings of length $L$ and their counts, e.g. `{"0000": 812, ...}`, or
+- `"correlations"`: connected 2-point functions $g^{(2)}_i$ for $i = 1, \ldots, \lfloor L/2 \rfloor$, with keys written exactly as `"(0, i)"` (with a space after the comma), e.g. `{"(0, 1)": 0.41, "(0, 2)": 0.36}` for $L = 4$ or $5$, and optionally `"correlations_err"`: their statistical errors, with the same keys.
+
+In a sequence, all system sizes must use the same kind of data (all `"samples"` or all `"correlations"`).
 
 Experiments run with Pulser also record the hardware-specific settings actually used in a `"pulse"` entry (`a`, `J`, `Omega`, `delta`, `surge_time_ns`, `duration_ns`, `Jt`). The pulse duration `duration_ns` is the surge time `surge_time_ns` rounded to the nearest multiple of the channel clock period (4 ns on `AnalogDevice`), and `Jt` is computed from `duration_ns`.
 
@@ -64,7 +71,12 @@ Experiments run with Pulser also record the hardware-specific settings actually 
 2) ensure the `.json` input file includes `"device": "QutipEmulator"` (or `"MPSBackend"`).
 3) **(optional)** set the interatomic distance with `"device_options": {"a": <value>}`.
 
-See `protocol_mbqs.json`, `protocol_seq_mbqs.json`, `expdata_mbqs.json` and `expdata_seq_mbqs.json` in `examples`.
+See `protocol_mbqs.json`, `protocol_seq_mbqs.json`, `expdata_mbqs.json` and `expdata_seq_mbqs.json` in `examples`. From the root of the repository, run for instance:
+```bash
+python3 src/bacq_core/main.py protocol_seq_mbqs.json   # run the experiments, then evaluate them
+python3 src/bacq_core/main.py expdata_seq_mbqs.json    # evaluate existing experiment data
+```
+The input file is looked up in the `examples` folder, and the experiment data and results files are written in the current directory.
 
 **Run benchmark experiments on a new Pulser emulator:**
 1) ensure the `.json` input file contains `"benchmark": "mbqs"`.
