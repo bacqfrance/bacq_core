@@ -7,7 +7,9 @@ In particular, this `examples` folder contains all types of input files for the 
 - `expdata_benchmarkname.json`: experimental result for a single problem size instance,
 - `expdata_seq_benchmarkname.json`: experimental results for a series of problem sizes instances.
 
-The files provided here correspond to example files for the QWS benchmark on *IBM basic_simulator*.
+The QWS files provided here correspond to example files for single-size and multiple-size experiments on noiseless *AerSimulator*.
+
+The VQLS files provided here correspond to example files for single-size and multiple-size experiments on noiseless *AerSimulator*.
 
 The MNR files are different in kind. `protocol_mnr.json` is the full protocol of BACQ deliverable D3.2 on the *FakeMarrakesh* emulator, which runs for hours to days. `expdata_mnr.json` (about 11 MB) holds the data of that campaign: the noiseless, raw and mitigated VQE trajectories of every seed, from which the evaluation fits its convergence model. It is not a quick demonstration run, since a short MNR run does not converge to meaningful results.
 
