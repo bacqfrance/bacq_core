@@ -1,0 +1,51 @@
+{
+    "filetype": "experiment_seq",
+    "benchmark": "mbqs",
+    "device": "example",
+    "parameters": {
+        "state": "down",
+        "threshold": 0.1,
+        "num_shots": 1000
+    },
+    "results": {
+        "3": {
+            "correlations": {
+                "(0, 1)": 0.4
+            }
+        },
+        "4": {
+            "correlations": {
+                "(0, 1)": 0.4,
+                "(0, 2)": 0.38
+            }
+        },
+        "5": {
+            "correlations": {
+                "(0, 1)": 0.41,
+                "(0, 2)": 0.36
+            }
+        },
+        "6": {
+            "correlations": {
+                "(0, 1)": 0.44,
+                "(0, 2)": 0.34,
+                "(0, 3)": 0.43
+            }
+        },
+        "7": {
+            "correlations": {
+                "(0, 1)": 0.47,
+                "(0, 2)": 0.34,
+                "(0, 3)": 0.41
+            }
+        },
+        "8": {
+            "correlations": {
+                "(0, 1)": 0.4,
+                "(0, 2)": 0.29,
+                "(0, 3)": 0.31,
+                "(0, 4)": 0.4
+            }
+        }
+    }
+}

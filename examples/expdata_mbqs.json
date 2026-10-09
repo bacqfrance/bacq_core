@@ -1,0 +1,23 @@
+{
+    "filetype": "experiment",
+    "benchmark": "mbqs",
+    "device": "example",
+    "parameters": {
+        "state": "down",
+        "threshold": 0.1,
+        "L": 3,
+        "num_shots": 2000
+    },
+    "result": {
+        "samples": {
+            "000": 665,
+            "111": 343,
+            "100": 180,
+            "010": 179,
+            "001": 176,
+            "101": 154,
+            "011": 152,
+            "110": 151
+        }
+    }
+}

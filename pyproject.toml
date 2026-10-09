@@ -32,6 +32,15 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Quantum Computing",
 ]
 
+[project.optional-dependencies]
+mbqs = [
+  "mbqs>=1.0.0; python_version>='3.12'",
+]
+mbqs-mps = [
+  "mbqs>=1.0.0; python_version>='3.12'",
+  "emu-mps",
+]
+
 [project.urls]
 Homepage = "https://www.lne.fr/en/metriqs-france/projet-bacq"
 Repository = "https://github.com/bacqfrance"
