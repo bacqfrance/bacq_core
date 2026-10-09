@@ -9,6 +9,8 @@ In particular, this `examples` folder contains all types of input files for the 
 
 The files provided here correspond to example files for the QWS benchmark on *IBM basic_simulator*.
 
+The MNR files are different in kind. `protocol_mnr.json` is the full protocol of BACQ deliverable D3.2 on the *FakeMarrakesh* emulator, which runs for hours to days. `expdata_mnr.json` (about 11 MB) holds the data of that campaign: the noiseless, raw and mitigated VQE trajectories of every seed, from which the evaluation fits its convergence model. It is not a quick demonstration run, since a short MNR run does not converge to meaningful results.
+
 ## Files requirements
 **1) Protocol input files**
 
