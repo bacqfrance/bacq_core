@@ -15,7 +15,7 @@ For benchmarking purposes, we consider two graph structures: cycle graphs and 2D
 Let $d$ be the distance between the source and target nodes.
 The criteria for a successful benchmark test on a given instance $(n,d)$, described by the number of nodes $(2^n)$ and the distance $d$, is:
 
-*"Finding the target node, located at a distance $d$ from the source node in the graph, with a success probability $p\geq p^*(n,d)$."*
+"Finding the target node, located at a distance $d$ from the source node in the graph, with a success probability $p\geq p^*(n,d)$."
 
 
 ## Metrics definition and Score evaluation
