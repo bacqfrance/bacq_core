@@ -26,7 +26,7 @@ Further reading :
 List of the proposed metrics and associated papers or preprints.
 - **Quantum Physics Simulation**
     - *BACQ-PS-MBQS*: [Many-body Quantum Score][3] based on a quench for the transverse-field Ising model
-    - *BACQ-PS-QBCS*: Quench for the BCS model
+    - *BACQ-PS-QBCS*: [Quench for the BCS model](https://github.com/bacqfrance/bacq-ps-qbcs)
 - **Optimization**
     - *BACQ-OP-QSCORE*: [Q-score MaxCut][1]
     - *BACQ-OP-GSCORE*: [Maximum Cardinality Matching on the $G_n$ series][2]
