@@ -22,7 +22,7 @@
         ],
         "num_twirls": 8,
         "mu_fit_window": 25,
-        "alpha": null,
+        "alpha": 2.0,
         "energy_shots": 1000,
         "classical_efficiency": 72733000000.0,
         "flops_prefactor": 703.336,

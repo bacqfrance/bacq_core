@@ -5,6 +5,7 @@ Define how to evaluate a BACQ-EP-MNR experiment (BACQ D3.2).
 
 From the VQE runs (noiseless, raw, mitigated) at several ansatz depths:
     L1 -- fit the phenomenological convergence model E(Ng, Nit) and the effective noise eps_eff,
+          and the least algorithmic resource Delta = Ng * Nit at a target accuracy,
     L2 -- classical optimizer cost per iteration (power law in the number of layers),
     L3 -- minimal dressed energy per gate at gate error eps_eff (superconducting full-stack model),
     L4 -- least-energy operating point (Ng, Nit) at a target accuracy.
@@ -15,7 +16,7 @@ from scipy.optimize import curve_fit
 
 from .helpers_energy import get_optimal_gate_energy
 from .helpers_instance import get_num_measurement_groups
-from .view import energy_txt
+from .view import energy_txt, resource_txt
 
 _NG_GRID = np.linspace(1, 2000, 4000)
 _NIT_CONVERGED = 1e6
@@ -37,7 +38,8 @@ def compute_metric(result, num_qubits, mu_fit_window, alpha, energy_shots, class
                    floor_margin, target_multipliers):
     """
     Computes the BACQ-EP-MNR figure of merit: the minimal error reachable on the device (dE_min),
-    and the minimal total energy (E_min) to reach an accuracy just above it.
+    and, at an accuracy just above it, the minimal algorithmic resource (Delta_min, hardware-agnostic)
+    and the minimal total energy (E_min).
     """
     ## L1: convergence model and effective noise
     fit, eps_eff, eps_raw = fit_convergence_model(result, mu_fit_window, alpha)
@@ -49,6 +51,9 @@ def compute_metric(result, num_qubits, mu_fit_window, alpha, energy_shots, class
 
     metric = {
         "dE_min": dE_min,
+        "Delta_min": None,
+        "Delta_Nit": None,
+        "Delta_Ng": None,
         "E_min_J": None,
         "E_min_Wh": None,
         "Nit": None,
@@ -65,15 +70,27 @@ def compute_metric(result, num_qubits, mu_fit_window, alpha, energy_shots, class
         "fit_settings": (("rate over full trajectories" if mu_fit_window is None
                           else f"rate over {mu_fit_window} iterations per layer")
                          + (", alpha fitted" if alpha is None else ", alpha fixed")),
+        "resource_vs_error": [],
         "energy_vs_error": [],
+        "resource_report": "",
         "energy_report": "",
     }
 
-    ## Without algorithmic optimization, no energetic figure of merit
+    ## Without algorithmic optimization, no resource or energetic figure of merit
     if not metric["optimization_possible"]:
         metric["message"] = (f"No optimization possible: the optimal circuit (L* = {layers_opt:.2f} layers) is shallower "
                              f"than the shallowest executable circuit (1 layer).")
         return metric
+
+    ## L1: least algorithmic resource (hardware-agnostic)
+    least = compute_min_resource(fit, eps_eff, dE_min * floor_margin)
+    metric.update({
+        "Delta_min": least["resource"],
+        "Delta_Nit": least["Nit"],
+        "Delta_Ng": least["Ng"],
+        "resource_vs_error": [compute_min_resource(fit, eps_eff, dE_min * m) for m in target_multipliers],
+    })
+    metric["resource_report"] = resource_txt.format(metric=metric, floor_margin=floor_margin)
 
     ## L3: dressed energy per gate at gate error eps_eff
     device = result["device_params"]
@@ -332,6 +349,28 @@ def get_iterations_for_target(fit, eps, target, Ng):
     Nit = np.where((frac > 0) & (frac < 1) & (dNg > 0) & np.isfinite(Nit), Nit, np.nan)
 
     return np.maximum(Nit, 1.0)
+
+
+def compute_min_resource(fit, eps, target):
+    """
+    Least algorithmic resource on the iso-accuracy contour 'target' (Sec. 3.6):
+        Delta = Ng * Nit
+    """
+    Nit = get_iterations_for_target(fit, eps, target, _NG_GRID)
+    valid = np.isfinite(Nit) & (Nit > 1)
+    if not valid.any():
+        raise ValueError(f"Target error {target=:.3g} is not reachable.")
+
+    Ng, Nit = _NG_GRID[valid], Nit[valid]
+    Delta = Ng * Nit
+    k = int(np.argmin(Delta))
+
+    return {
+        "target_error": float(target),
+        "resource": float(Delta[k]),
+        "Nit": float(Nit[k]),
+        "Ng": float(Ng[k]),
+    }
 
 
 def compute_min_energy(fit, eps, target, gate_energy, layers_of_Ng, num_meas, energy_shots,
