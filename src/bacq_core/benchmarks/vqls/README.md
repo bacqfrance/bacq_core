@@ -1,8 +1,8 @@
 # Variational Quantum Linear Solver (VQLS) Benchmark
 This folder includes VQLS-specific scripts.
 
-## The 1D-Laplace equation
-For benchmarking purposes, we consider the steady-state heat equation which can be described by the 1D Laplace equation, with Dirichlet boundary conditions, such that
+## The 1D-Poisson equation
+For benchmarking purposes, we consider the steady-state heat equation which can be described by the 1D Poisson equation, with Dirichlet boundary conditions, such that
 
 ```math
 \forall x\in [0,L], \quad -\nabla^2u(x) = V \quad \text{ with } \quad u(0) = u(L) = 0.
