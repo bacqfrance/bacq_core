@@ -5,13 +5,14 @@ Harshit Verma -- October 2026
 from bacq_core.parameters import Parameter, ParameterSet
 
 from .experiment import run
+from .helpers_protocol import sequence_generator
 from .evaluate import get_metric_success, get_score
-from .view import benchmark_txt
+from .view import benchmark_txt, benchmark_seq_txt
 
 
 parameters = ParameterSet([
     ## VQE experiment
-    Parameter(name="n", constraint=int, description="Number of qubits (spin sites of the Heisenberg chain)"),
+    Parameter(name="n", constraint=int, description="Number of qubits (spin sites of the Heisenberg chain)", sequence=True),
     Parameter(name="layers", constraint=list[int], description="Numbers of ansatz layers to run"),
     Parameter(name="num_seeds", constraint=int, description="Number of random initial parameter sets per number of layers"),
     Parameter(name="max_iters", constraint=int, description="Maximum number of COBYLA iterations"),
@@ -32,4 +33,10 @@ parameters = ParameterSet([
     Parameter(name="gate_time_range_ns", constraint=list[float], description="Range [min, max] of the single-qubit gate time [ns]", meta=True),
     Parameter(name="floor_margin", constraint=float, description="Target accuracy of the figure of merit, as a multiple of the error floor", meta=True),
     Parameter(name="target_multipliers", constraint=list[float], description="Target accuracies of the energy-error curve, as multiples of the error floor", meta=True),
+])
+
+## Defined for a single problem size: a sequence input file is rejected by sequence_generator()
+sequence_parameters = ParameterSet([
+    Parameter(name="n_min", constraint=int, description="Number of qubits for the minimum size problem"),
+    Parameter(name="n_max", constraint=int, description="Number of qubits for the maximum size problem"),
 ])

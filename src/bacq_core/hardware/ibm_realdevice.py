@@ -1,12 +1,15 @@
 """
 Define the IBMRealDevice device.
 
-This makes use of a real IBM gate-based device, and returns counts.
+This makes use of a real IBM gate-based device, and returns counts or expectation values.
 """
 
+import numpy as np
 from qiskit_ibm_runtime import QiskitRuntimeService
-from qiskit_ibm_runtime import Batch, Session, SamplerV2 as Sampler
+from qiskit_ibm_runtime import Batch, Session, SamplerV2 as Sampler, EstimatorV2 as Estimator
 from qiskit.transpiler import generate_preset_pass_manager
+
+_MAX_PUBS_PER_JOB = 100
 
 _IBM_REAL_DEVICES = [
     "ibm_fez",
@@ -31,6 +34,39 @@ class IBMRealDevice:
         service = QiskitRuntimeService()
         self.device = service.backend(name)
         self.name = name
+
+
+    def estimate(self, pubs, num_shots, max_pubs_per_job=_MAX_PUBS_PER_JOB):
+        """
+        Estimate expectation values of circuits already transpiled for the device (no further transpilation).
+        The runtime error mitigation is switched off (resilience level 0, no twirling), so that the benchmark
+        protocol alone sets the mitigation. Several jobs are submitted in a Batch.
+
+        Arguments:
+            .pubs               -- list(tuple), (transpiled circuit, observable with the circuit layout applied)
+            .num_shots          -- int, number of shots, setting the estimator precision 1/sqrt(num_shots)
+            .max_pubs_per_job   -- int, maximum number of pubs per job
+
+        Returns:
+            .values -- list(float), expectation values
+        """
+        chunks = [pubs[k:k + max_pubs_per_job] for k in range(0, len(pubs), max_pubs_per_job)]
+
+        def configure(estimator):
+            estimator.options.default_precision = 1 / np.sqrt(num_shots)
+            estimator.options.resilience_level = 0
+            estimator.options.twirling.enable_gates = False
+            estimator.options.twirling.enable_measure = False
+            return estimator
+
+        if len(chunks) == 1:
+            jobs = [configure(Estimator(mode=self.device)).run(chunks[0])]
+        else:
+            with Batch(backend=self.device) as batch:
+                estimator = configure(Estimator(mode=batch))
+                jobs = [estimator.run(chunk) for chunk in chunks]
+
+        return [float(np.squeeze(result.data.evs)) for job in jobs for result in job.result()]
 
 
     def compute(self, circuits, num_shots, params=[], use_session=False, optimization_level=1):

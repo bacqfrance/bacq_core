@@ -14,6 +14,7 @@ from qiskit.transpiler import generate_preset_pass_manager
 _IBM_SIMULATORS = [
     "AerSimulator",
     "FakeMarrakesh",
+    "FakeNighthawk",
 ]
 
 class IBMSimulator:
@@ -27,6 +28,13 @@ class IBMSimulator:
 
             case "FakeMarrakesh":
                 self.device = FakeMarrakesh()
+                if refresh:
+                    service = QiskitRuntimeService()
+                    self.device.refresh(service)
+
+            case "FakeNighthawk":
+                from qiskit_ibm_runtime.fake_provider import FakeNighthawk
+                self.device = FakeNighthawk()
                 if refresh:
                     service = QiskitRuntimeService()
                     self.device.refresh(service)

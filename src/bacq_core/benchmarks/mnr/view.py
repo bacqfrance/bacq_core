@@ -26,14 +26,28 @@ Benchmark result:
 - Effective noise: eps_eff = {metric[eps_eff]:.3g} (unmitigated: {metric[eps_raw]:.3g})
 - {metric[message]}
 - Convergence model ({metric[fit_settings]}): alpha = {metric[fit][alpha]:.3g}, mu0 = {metric[fit][mu0]:.3g}, lambda = {metric[fit][lam]:.3f}, Ng_th = {metric[fit][Ng_th]:.0f}
-- Minimal error: dE_min = {metric[dE_min]:.3f}{metric[energy_report]}
+- Minimal error: dE_min = {metric[dE_min]:.3f}{metric[resource_report]}{metric[energy_report]}
 - Success: {success}
 ___________________________________
 
 """
+
+resource_txt = """
+- Minimal algorithmic resource at {floor_margin} x dE_min: Delta = Ng x Nit = {metric[Delta_min]:.3g} (Nit = {metric[Delta_Nit]:.0f}, Ng = {metric[Delta_Ng]:.0f})"""
 
 energy_txt = """
 - Minimal energy at {floor_margin} x dE_min: E_min = {metric[E_min_J]:.3g} J ({metric[E_min_Wh]:.3g} Wh)
 - Operating point: Nit = {metric[Nit]:.0f}, Ng = {metric[Ng]:.0f}
 - Classical share of E_min: {metric[classical_share]:.1%}
 - Energy per gate: {metric[gate][gate_energy]:.3g} J ({metric[gate][attenuation_db]:.1f} dB, {metric[gate][gate_time_ns]:.1f} ns)"""
+
+benchmark_seq_txt = """
+***** BACQ-EP-MNR (Energetic cost of VQE) *****
+   _____________________________
+
+Device: {device}
+Date experiments: {date}
+   _____________________________
+
+BACQ-EP-MNR is defined for a single problem size: no sequence results.
+"""

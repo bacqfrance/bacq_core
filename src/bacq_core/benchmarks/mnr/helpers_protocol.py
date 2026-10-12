@@ -10,6 +10,15 @@ _MIN_NUM_SEEDS = 2
 _MIN_NUM_SHOTS = 1000
 
 
+def sequence_generator(n_min, n_max):
+    """
+    BACQ-EP-MNR is defined for a single problem size: no sequence of problem sizes is generated.
+    """
+    raise NotImplementedError(
+        f"BACQ-EP-MNR is defined for a single problem size ({n_min=}, {n_max=} given): use a 'protocol' input file with the parameter n."
+    )
+
+
 def check_parameters_value(num_qubits, layers, num_seeds, max_iters, tol, num_shots, zne_scale_factors, num_twirls):
     """
     Checks that input parameters value are protocol-valid.
