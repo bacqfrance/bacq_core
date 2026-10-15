@@ -44,7 +44,7 @@ def check_protocol_parameters(benchmark, parameters, sequence_parameters=None):
             )
 
 
-def run_benchmark(benchmark, device, parameters, exp_data=None):
+def run_benchmark(benchmark, device, parameters, exp_data=None, device_options={}):
     """
     Runs the benchmark for a single experiment.
 
@@ -69,6 +69,7 @@ def run_benchmark(benchmark, device, parameters, exp_data=None):
 
     if exp_data is None:
 
+        exp_params = {**exp_params, **device_options}
         exp_data = benchmark_module.run(device, **exp_params)
 
         exp_data["date"] = date
@@ -95,7 +96,7 @@ def run_benchmark(benchmark, device, parameters, exp_data=None):
     return benchmark_data
 
 
-def run_benchmark_sequence(benchmark, device, parameters, exp_data_seq=None, sequence_parameters=None):
+def run_benchmark_sequence(benchmark, device, parameters, exp_data_seq=None, sequence_parameters=None, device_options={}):
     """
     Runs the benchmark for a series of experiments.
 
@@ -119,14 +120,14 @@ def run_benchmark_sequence(benchmark, device, parameters, exp_data_seq=None, seq
     if exp_data_seq is None:
         list_seq_params = benchmark_module.sequence_generator(**sequence_parameters)
 
-        exp_params = {**exp_params, **list_seq_params[0], "seq_params": list_seq_params}
+        exp_params = {**exp_params, **list_seq_params[0], "seq_params": list_seq_params, **device_options}
         exp_data_seq = benchmark_module.run(device, **exp_params)
 
         exp_data_seq["date"] = date
 
         exp_seq_filename = "expdata_seq_" + exp_data_seq["benchmark"] + "_" + exp_data_seq["device"] + "_" + exp_data_seq["date"]
         with open(exp_seq_filename + '.json', 'w') as f:
-            json.dump(exp_data_seq, f,indent=4)
+            json.dump(exp_data_seq, f, indent=4)
         
         pass
 

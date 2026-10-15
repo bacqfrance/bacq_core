@@ -48,11 +48,12 @@ def main(args):
     device = input_data["device"]
     parameters = input_data["parameters"]
     sequence_parameters = input_data.get("sequence_parameters", None)
+    device_options = input_data.get("device_options",{})
 
     match filetype:
         case "protocol":
             check_protocol_parameters(benchmark, parameters)
-            benchmark_data = run_benchmark(benchmark, device, parameters)
+            benchmark_data = run_benchmark(benchmark, device, parameters, device_options=device_options)
 
             benchmark_filename = 'result_' + benchmark_data['metadata']['benchmark'] + '_' + benchmark_data['metadata']['device'] + '_' + benchmark_data['metadata']['date']
             with open(benchmark_filename + '.json', 'w') as f:
@@ -64,7 +65,7 @@ def main(args):
 
         case "protocol_seq":
             check_protocol_parameters(benchmark, parameters, sequence_parameters)
-            benchmark_seq_data = run_benchmark_sequence(benchmark, device, parameters, sequence_parameters=sequence_parameters)
+            benchmark_seq_data = run_benchmark_sequence(benchmark, device, parameters, sequence_parameters=sequence_parameters, device_options=device_options)
 
             benchmark_seq_filename = 'results_' + benchmark_seq_data['metadata']['benchmark'] + '_' + benchmark_seq_data['metadata']['device'] + '_' + benchmark_seq_data['metadata']['date']
             with open(benchmark_seq_filename + '.json', 'w') as f:

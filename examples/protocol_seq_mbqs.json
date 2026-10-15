@@ -1,0 +1,17 @@
+{
+    "filetype": "protocol_seq",
+    "benchmark": "mbqs",
+    "device": "QutipEmulator",
+    "device_options": {
+        "a": 7.5
+    },
+    "parameters": {
+        "state": "down",
+        "threshold": 0.1,
+        "num_shots": 20000
+    },
+    "sequence_parameters": {
+        "L_min": 3,
+        "L_max": 8
+    }
+}

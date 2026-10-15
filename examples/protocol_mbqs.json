@@ -1,0 +1,14 @@
+{
+    "filetype": "protocol",
+    "benchmark": "mbqs",
+    "device": "QutipEmulator",
+    "device_options": {
+        "a": 7.5
+    },
+    "parameters": {
+        "state": "down",
+        "threshold": 0.1,
+        "L": 6,
+        "num_shots": 20000
+    }
+}
