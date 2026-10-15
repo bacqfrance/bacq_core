@@ -53,6 +53,7 @@ def run_benchmark(benchmark, device, parameters, exp_data=None, device_options={
         .device         -- str, name of the device
         .parameters     -- dict, contains all protocol parameters and values
         .exp_data       -- dict, content of experiment data (if 'experiment' as input file)
+        .device_options -- dict, contains device parameter options
 
     Returns:
         .benchmark_data     -- dict, content of the benchmark output 'result' file
@@ -106,7 +107,7 @@ def run_benchmark_sequence(benchmark, device, parameters, exp_data_seq=None, seq
         .parameters             -- dict, contains all protocol parameters and values
         .exp_data_seq           -- dict, content of experiments data (if 'experiment_seq' as input file)
         .sequence_parameters    -- dict, contains variable parameters (if 'protocol_seq' as input file)
-
+        .device_options -- dict, contains device parameter options
     Returns:
         .benchmark_seq_data     -- dict, content of the output benchmark 'results' file
     """
