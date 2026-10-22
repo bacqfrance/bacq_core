@@ -46,8 +46,8 @@ This pulls PyTorch, which on Linux defaults to the CUDA build (several GB); for 
 **Protocol parameters** (independent of the hardware):
 - `state`: `"down"` or `"plus"` (only `"down"` can be run on neutral atoms for now),
 - `L`: number of qubits ($2 \le L \le 50$, range of the tabulated data), or `L_min`/`L_max` as sequence parameters,
-- `threshold`: threshold $\epsilon$ on the metric,
-- `num_shots`: number of shots per system size.
+- `threshold`: finite, positive threshold $\epsilon$ on the metric,
+- `num_shots`: number of shots per system size (at least 2 for experiments and sample-based evaluation; at least 1 for correlation-only inputs).
 
 **Device options** (optional, hardware-specific): given in the `"device_options"` entry of the input file, not in `"parameters"`, e.g.
 ```json
@@ -62,7 +62,9 @@ Any other device option raises an error. The device options actually used are re
 - `"samples"`: measured bitstrings of length $L$ and their counts, e.g. `{"0000": 812, ...}`, or
 - `"correlations"`: connected 2-point functions $g^{(2)}_i$ for $i = 1, \ldots, \lfloor L/2 \rfloor$, with keys written exactly as `"(0, i)"` (with a space after the comma), e.g. `{"(0, 1)": 0.41, "(0, 2)": 0.36}` for $L = 4$ or $5$, and optionally `"correlations_err"`: their statistical errors, with the same keys.
 
-In a sequence, all system sizes must use the same kind of data (all `"samples"` or all `"correlations"`).
+Each result must contain exactly one nonempty data representation. Sample keys must be binary strings, and counts must be nonnegative integers summing to `num_shots`. Correlations and their uncertainties must be finite numbers; uncertainties must also be nonnegative and use the same pairs as the correlations. Booleans are not accepted as numerical parameters, counts or correlation values.
+
+In a sequence, all system sizes must use the same kind of data (all `"samples"` or all `"correlations"`). Correlation uncertainties may be omitted independently for each size: omitted uncertainties contribute zero, while supplied uncertainties are retained. Empty sequences are rejected.
 
 Experiments run with Pulser also record the hardware-specific settings actually used in a `"pulse"` entry (`a`, `J`, `Omega`, `delta`, `surge_time_ns`, `duration_ns`, `Jt`). The pulse duration `duration_ns` is the surge time `surge_time_ns` rounded to the nearest multiple of the channel clock period (4 ns on `AnalogDevice`), and `Jt` is computed from `duration_ns`.
 
@@ -100,6 +102,12 @@ The input file is looked up in the `examples` folder, and the experiment data an
 In all cases, the bits of the measured bitstrings must follow the order of the qubits along the ring.
 
 *Note*: Running experiments on real QPU requires that a QPU access can be established by the end-user.
+
+## Regression tests
+After installing the optional dependencies, run from the repository root:
+```bash
+PYTHONPATH=src python3 -m unittest discover -s tests
+```
 
 ## Authors
 - `mbqs` package: Harold ERBIN

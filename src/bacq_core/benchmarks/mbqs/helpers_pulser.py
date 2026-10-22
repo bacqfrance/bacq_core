@@ -5,6 +5,8 @@ Defines functions to build the MBQS quench as a Pulser sequence (neutral atoms).
 Adapted from `notebooks/analog_rydberg_pulser.ipynb` in the `mbqs` repository.
 """
 
+from math import isfinite
+
 import pulser
 from mbqs import MBQSProtocol, RydbergMapping
 from mbqs.simulations.lattice import ring_coordinates
@@ -35,11 +37,11 @@ def check_a(a):
     """
     Checks type and value of the interatomic distance.
     """
-    if not isinstance(a, (int, float)):
+    if isinstance(a, bool) or not isinstance(a, (int, float)):
         raise TypeError("Device option a must be <float>.")
 
-    if a <= 0:
-        raise ValueError(f"Device option {a=} not valid: > 0 required.")
+    if not isfinite(a) or a <= 0:
+        raise ValueError(f"Device option {a=} not valid: finite and > 0 required.")
 
 
 def build_sequence_pulser(L, device, state="down", a=_DEFAULT_A):
@@ -56,6 +58,7 @@ def build_sequence_pulser(L, device, state="down", a=_DEFAULT_A):
         .sequence   -- pulser.Sequence
         .pulse      -- dict, physical parameters of the quench
     """
+    check_a(a)
     if state != "down":
         raise NotImplementedError(
             f"Initial {state=} is not implemented on neutral atoms: only 'down' (all atoms in the ground state) is available."

@@ -4,6 +4,8 @@ Grégoire Misguich -- October 2026
 Defines functions to ensure the MBQS protocol is well applied.
 """
 
+from math import isfinite
+
 _STATES = ["down", "plus"]
 
 # Range of system sizes covered by the tabulated free-fermion data of `mbqs`.
@@ -38,6 +40,8 @@ def check_parameters_value(state, L, threshold, num_shots, list_seq_params=None)
     if list_seq_params is None:
         check_L(L)
     else:
+        if not list_seq_params:
+            raise ValueError("The experiment sequence must not be empty.")
         for seq_params in list_seq_params:
             check_L(seq_params["L"])
 
@@ -57,7 +61,7 @@ def check_L(L):
     """
     Checks type and value of input system size.
     """
-    if not isinstance(L, int):
+    if isinstance(L, bool) or not isinstance(L, int):
         raise TypeError("Parameter L must be <int>.")
 
     if not _MIN_L <= L <= _MAX_L:
@@ -68,31 +72,72 @@ def check_threshold(threshold):
     """
     Checks type and value of input threshold.
     """
-    if not isinstance(threshold, (int, float)):
+    if isinstance(threshold, bool) or not isinstance(threshold, (int, float)):
         raise TypeError("Parameter threshold must be <float>.")
 
-    if threshold <= 0:
-        raise ValueError(f"Parameter {threshold=} not valid: > 0 required.")
+    if not isfinite(threshold) or threshold <= 0:
+        raise ValueError(f"Parameter {threshold=} not valid: finite and > 0 required.")
 
 
 def check_num_shots(num_shots):
     """
     Checks type and value of input number of shots.
     """
-    if not isinstance(num_shots, int):
+    if isinstance(num_shots, bool) or not isinstance(num_shots, int):
         raise TypeError("Parameter num_shots must be <int>.")
 
     if num_shots < _MIN_NUM_SHOTS:
         raise ValueError(f"Parameter {num_shots=} not valid: >= {_MIN_NUM_SHOTS} required.")
 
 
+def check_sample_num_shots(num_shots):
+    """Require enough samples to estimate statistical uncertainties."""
+    check_num_shots(num_shots)
+    if num_shots < 2:
+        raise ValueError("Sample data require at least 2 shots to estimate uncertainties.")
+
+
 def check_counts(counts, L, num_shots):
     """
-    Checks that measured bitstrings match the system size and the number of shots.
+    Validate measured bitstrings and counts, including the total number of shots.
+
+    Use num_shots=None when the declared shot count is unavailable.
     """
-    if any(len(bitstring) != L for bitstring in counts.keys()):
+    check_L(L)
+    if not isinstance(counts, dict):
+        raise TypeError("Samples must be a dictionary of bitstrings and counts.")
+    if not counts:
+        raise ValueError("Samples must not be empty.")
+    if any(not isinstance(bitstring, str) for bitstring in counts):
+        raise TypeError("Sample bitstrings must be strings.")
+    if any(len(bitstring) != L for bitstring in counts):
         raise ValueError(f"Reported bitstrings do not all have length {L=}.")
+    if any(set(bitstring) - {"0", "1"} for bitstring in counts):
+        raise ValueError("Sample bitstrings must contain only '0' and '1'.")
+    if any(isinstance(count, bool) or not isinstance(count, int) for count in counts.values()):
+        raise TypeError("Sample counts must be integers, not booleans.")
+    if any(count < 0 for count in counts.values()):
+        raise ValueError("Sample counts must be nonnegative.")
 
     num_shots_exp = sum(counts.values())
-    if num_shots_exp != num_shots:
+    check_sample_num_shots(num_shots_exp)
+    if num_shots is not None:
+        check_sample_num_shots(num_shots)
+    if num_shots is not None and num_shots_exp != num_shots:
         raise ValueError(f"Reported counts does not have the right number of shots.\n{num_shots=} vs reported_counts={num_shots_exp}")
+
+
+def check_correlations(correlations, errors=False):
+    """Validate correlation values or their statistical uncertainties."""
+    name = "correlations_err" if errors else "correlations"
+    if not isinstance(correlations, dict):
+        raise TypeError(f"{name} must be a dictionary.")
+    if not correlations:
+        raise ValueError(f"{name} must not be empty.")
+    values = correlations.values()
+    if any(isinstance(value, bool) or not isinstance(value, (int, float)) for value in values):
+        raise TypeError(f"{name} values must be numbers, not booleans.")
+    if any(not isfinite(value) for value in values):
+        raise ValueError(f"{name} values must be finite.")
+    if errors and any(value < 0 for value in values):
+        raise ValueError("Correlation uncertainties must be nonnegative.")

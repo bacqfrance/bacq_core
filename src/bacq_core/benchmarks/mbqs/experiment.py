@@ -7,7 +7,7 @@ Defines how to run an experiment for the Many-Body Quantum Score
 from bacq_core.hardware.pulser_emulator import PulserEmulator, _PULSER_EMULATORS
 
 from .helpers_pulser import build_sequence_pulser, check_device_options, _DEFAULT_A
-from .helpers_protocol import check_parameters_value, check_counts
+from .helpers_protocol import check_parameters_value, check_counts, check_sample_num_shots
 
 
 def run(device, **params):
@@ -61,10 +61,13 @@ def run_pulser(hardware, state, L, threshold, num_shots, list_seq_params=None, a
     Returns:
         .exp_data            -- dict, experiment(s) data to be stored in json file
     """
+    check_sample_num_shots(num_shots)
     if list_seq_params is None:
         sizes = [L]
     else:
         sizes = [seq_params["L"] for seq_params in list_seq_params]
+    if not sizes:
+        raise ValueError("The experiment sequence must not be empty.")
 
     sequences = []
     pulses = []
@@ -76,7 +79,7 @@ def run_pulser(hardware, state, L, threshold, num_shots, list_seq_params=None, a
     all_counts = hardware.compute(sequences, num_shots)
 
     results = {}
-    for size, counts, pulse in zip(sizes, all_counts, pulses):
+    for size, counts, pulse in zip(sizes, all_counts, pulses, strict=True):
         check_counts(counts, size, num_shots)
         results[str(size)] = {"samples": counts, "pulse": pulse}
 
