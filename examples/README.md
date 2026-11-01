@@ -94,9 +94,3 @@ Then, from the terminal
 ```bash
 python3 /path/to/bacq_core/main.py my_input_file.json
 ```
-# QScore emulator examples
-
-The `protocol_qscore*.json` examples run the QScore benchmark with the local
-myQLM simulators. The default file uses `CLinalg` (QAOA); the Qutip example
-uses AQO jobs, and the simulated-annealing example uses `SimulatedAnnealing`.
-See `src/bacq_core/benchmarks/qscore/README.md` for installation and details.
