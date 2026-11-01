@@ -135,3 +135,7 @@ python src/bacq_core/main.py examples/protocol_qscore_simulated_annealing.json
 | `seed` | integer | Random seed for graph instance generation (`null` for random) | `42` |
 | `qutip_steps` | integer | Discretization steps for `QutipQPU` | `100` |
 | `qutip_tmax` | float | AQO evolution time for `QutipQPU` | `5.0` |
+
+## 7. References
+
+Martiel, S., Ayral, T., & Allouche, C. (2021). [Benchmarking Quantum Coprocessors in an Application-Centric, Hardware-Agnostic, and Scalable Way](https://doi.org/10.1109/TQE.2021.3090207). *IEEE Transactions on Quantum Engineering, 2*, 1–11.
