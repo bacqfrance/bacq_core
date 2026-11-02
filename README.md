@@ -22,7 +22,7 @@ Further reading :
 - BACQ publications: <https://www.lne.fr/en/metriqs-france/communications#publi>
 - arXiv paper : [BACQ-Application-oriented Benchmarks for Quantum Computing](https://arxiv.org/pdf/2403.12205)
 
-## Metrics Overview
+## Benchmarks Overview
 List of the proposed metrics and associated papers or preprints.
 - **Quantum Physics Simulation**
     - *BACQ-PS-MBQS*: [Many-body Quantum Score][3] based on a quench for the transverse-field Ising model
@@ -34,7 +34,7 @@ List of the proposed metrics and associated papers or preprints.
 - **Linear Systems Solving**
     - *BACQ-LS-LS1B*: Least square QUBO formulation
     - *BACQ-LS-LSVol*: Least square QUBO formulation
-    - *BACQ-LS-VQLS*: Laplace's equation (1D) with VQLS
+    - *BACQ-LS-VQLS*: Poisson's equation (1D) with VQLS
 - **Prime Factorization**
     - *BACQ-PF-PRIME*: Factorization problem
 - **Energetic Performance**
