@@ -68,7 +68,7 @@ pip install bacq_core
 
 Proceed the same way to install the relevant benchmark package when applicable (see their documentation).
 
-### Install the QScore integration dependency
+**Install the QScore integration dependency**
 
 The QScore package is maintained in a separate repository. To install the
 version intended for BACQ's QScore integration, install BACQ core with its
