@@ -34,7 +34,7 @@ $$\beta(N) = \frac{C(N) - C_{rand}(N)}{C_{max}(N) - C_{rand}(N)} \approx \frac{C
 ### The Q-Score Metric
 Given a target quality threshold $\beta^{*}$ (by default $\beta^{*} = 0.2$, i.e. 20% of the available improvement above random):
 
-$$\text{Q-score}(\beta^{*}) = \max \{ N \mid \beta(N) > \beta^{*} \}$$
+$$\text{Q-score}(\beta^{*}) = \max \lbrace N \mid \beta(N) > \beta^{*} \rbrace$$
 
 ---
 
@@ -129,7 +129,7 @@ python src/bacq_core/main.py examples/protocol_qscore_simulated_annealing.json
 | `device` | string | Target simulator/QPU (`CLinalg`, `QutipQPU`, `SimulatedAnnealing`, `MPS`, etc.) | Required |
 | `initial_size` | integer | Smallest graph size to test | `5` |
 | `size_limit` | integer | Largest graph size to test | `20` |
-| `beta` | float | Target quality threshold $\beta^*$ | `0.2` |
+| `beta` | float | Target quality threshold $\beta^{*}$ | `0.2` |
 | `iterator` | string | Search strategy: `"dichotomic"` (binary search) or `"exhaustive"` | `"dichotomic"` |
 | `depth` | integer | QAOA ansatz depth (QAOA devices only) | `1` |
 | `seed` | integer | Random seed for graph instance generation (`null` for random) | `42` |
