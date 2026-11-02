@@ -127,6 +127,7 @@ The main contributors are
 - Kyrylo SNIZHKO, CEA PHELIQS, France
 - Sidhartha Shankar DASH, CEA PHELIQS, France
 - Stéphane LOUISE, CEA-List, France
+- Joséphine HUNOUT, CEA-List, France
 - Harshit VERMA, CNRS, Research Lab MajuLab, Singapore
 
 As part of the MetriQs-France program, this work is supported by France 2030 under the French National Research Agency grant number ANR-22-QMET-0002.
