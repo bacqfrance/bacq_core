@@ -14,7 +14,7 @@ authors = [
   {name = "Sidhartha Shankar DASH", email = "sidhartha.shankar.dash@gmail.com"},
   {name = "Stéphane LOUISE", email = "stephane.louise@cea.fr"},
   {name = "Harshit VERMA", email = "harshit.verma@cnrs.fr"},
-  {name = "Damien NICOLAZIC", email = "damien.nicolazic@eviden.com"},
+  {name = "Damien NICOLAZIC", email = "damien.nicolazic@bull.com"},
 ]
 readme = "README.md"
 keywords = ["benchmark", "application-oriented", "quantum computing", "bacq"]
@@ -41,6 +41,9 @@ mbqs = [
 mbqs-mps = [
   "mbqs>=1.0.0; python_version>='3.12'",
   "emu-mps",
+]
+qscore = [
+  "qat-qscore @ git+https://github.com/myQLM/qscore.git",
 ]
 
 [project.urls]

@@ -68,6 +68,22 @@ pip install bacq_core
 
 Proceed the same way to install the relevant benchmark package when applicable (see their documentation).
 
+### Install the QScore integration dependency
+
+The QScore package is maintained in a separate repository. To install the
+version intended for BACQ's QScore integration, install BACQ core with its
+optional `qscore` extra from the repository root:
+```bash
+pip install -e ".[qscore]"
+```
+This extra installs `qat-qscore` from
+[myQLM/qscore](https://github.com/myQLM/qscore). It does not add
+QScore as a required dependency for other BACQ benchmarks.
+To run QScore on the myQLM `CLinalg`, `QutipQPU`, or
+`SimulatedAnnealing` emulators, see
+[`src/bacq_core/benchmarks/qscore/README.md`](src/bacq_core/benchmarks/qscore/README.md)
+and the example protocols in [`examples/`](examples).
+
 ## Run a benchmark
 **From a protocol description** (i.e run with experiments on hardware)
 1) Add your protocol input file in `examples`
@@ -99,13 +115,13 @@ These benchmark results are also saved in a `result(s)_benchmarkname_devicename_
 If experiments are performed in the process, an associated file is saved as `expdata_(seq_)benchmarkname_devicename_date.json`, in adequate format for benchmark evaluation.
 
 ## Authors and acknowledgment
-This repository is maintained by Laboratoire National de métrologie et d'essais (LNE) and is the result of a collaborative work between Thales, Eviden, an Atos business, CEA, and CNRS.
+This repository is maintained by Laboratoire National de métrologie et d'essais (LNE) and is the result of a collaborative work between Thales, Bull, CEA, and CNRS.
 
 The main contributors are
 - Noe OLIVIER, cortAIx Labs, Thales Research & Technology, France
 - Michel NOWAK, cortAIx Labs, Thales Research & Technology, France
 - Christophe LABREUCHE, cortAIx Labs, Thales Research & Technology, France
-- Damien NICOLAZIC, Eviden, France
+- Damien NICOLAZIC, Bull, France
 - Grégoire MISGUICH, CEA, Institut de thysique théorique, France
 - Harold ERBIN, CEA Institut de physique théorique, France
 - Kyrylo SNIZHKO, CEA PHELIQS, France
@@ -120,5 +136,3 @@ Distribution license **EUPL v1.2**.
 
 See the `LICENSE.md` file for the full license text.
 Reference: <https://interoperable-europe.ec.europa.eu/licence/european-union-public-licence-version-12-eupl>
-
-

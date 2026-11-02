@@ -1,0 +1,13 @@
+{
+    "filetype": "protocol",
+    "benchmark": "qscore",
+    "device": "SimulatedAnnealing",
+    "parameters": {
+        "initial_size": 5,
+        "size_limit": 6,
+        "beta": 0.2,
+        "iterator": "dichotomic",
+        "depth": 1,
+        "seed": 42
+    }
+}
