@@ -32,9 +32,9 @@ $$\beta(N) = \frac{C(N) - C_{rand}(N)}{C_{max}(N) - C_{rand}(N)} \approx \frac{C
 - $0 < \beta(N) < 1$: Meaningful optimization is captured.
 
 ### The Q-Score Metric
-Given a target quality threshold $\beta^*$ (by default $\beta^* = 0.2$, i.e. 20% of the available improvement above random):
+Given a target quality threshold $\beta^{*}$ (by default $\beta^{*} = 0.2$, i.e. 20% of the available improvement above random):
 
-$$\text{Q-score}(\beta^*) = \max \{ N \mid \beta(N) > \beta^* \}$$
+$$\text{Q-score}(\beta^{*}) = \max \{ N \mid \beta(N) > \beta^{*} \}$$
 
 ---
 
