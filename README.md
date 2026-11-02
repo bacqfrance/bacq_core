@@ -110,7 +110,7 @@ and the example protocols in [`examples/`](examples).
 For each problem instances, a metric and a success criteria are generated, and a score is computed as a result of multiple problem instances experiments.
 
 Benchmark results (metric, success or failure of the criteria, score and relevant information) will be displayed (printed) for each problem instance at the end of the computation.
-These benchmark results are also saved in a `result(s)_benchmarkname_devicename_experimentdate.json` file, acccording to a general format.
+These benchmark results are also saved in a `result(s)_benchmarkname_devicename_experimentdate.json` file, according to a general format.
 
 If experiments are performed in the process, an associated file is saved as `expdata_(seq_)benchmarkname_devicename_date.json`, in adequate format for benchmark evaluation.
 
@@ -122,7 +122,7 @@ The main contributors are
 - Michel NOWAK, cortAIx Labs, Thales Research & Technology, France
 - Christophe LABREUCHE, cortAIx Labs, Thales Research & Technology, France
 - Damien NICOLAZIC, Bull, France
-- Grégoire MISGUICH, CEA, Institut de thysique théorique, France
+- Grégoire MISGUICH, CEA, Institut de physique théorique, France
 - Harold ERBIN, CEA Institut de physique théorique, France
 - Kyrylo SNIZHKO, CEA PHELIQS, France
 - Sidhartha Shankar DASH, CEA PHELIQS, France
