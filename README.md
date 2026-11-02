@@ -29,14 +29,14 @@ List of the proposed metrics and associated papers or preprints.
     - *BACQ-PS-QBCS*: [Quench for the BCS model](https://github.com/bacqfrance/bacq-ps-qbcs)
 - **Optimization**
     - *BACQ-OP-QSCORE*: [Q-score MaxCut][1]
-    - *BACQ-OP-GSCORE*: [Maximum Cardinality Matching on the $G_n$ series][2]
+    - *BACQ-OP-GSCORE*: [Maximum Cardinality Matching on the $G_n$ series](https://github.com/bacqfrance/bacq-gscore_ls1b-lsvol_prime) , [Publication][2]
     - *BACQ-OP-QWS*: [Quantum WalkScore][4] - Graph Nodefinding on cycle/2D-torus graphs
 - **Linear Systems Solving**
-    - *BACQ-LS-LS1B*: Least square QUBO formulation
-    - *BACQ-LS-LSVol*: Least square QUBO formulation
+    - *BACQ-LS-LS1B*: [Least square QUBO formulation](https://github.com/bacqfrance/bacq-gscore_ls1b-lsvol_prime)
+    - *BACQ-LS-LSVol*: [Least square QUBO formulation](https://github.com/bacqfrance/bacq-gscore_ls1b-lsvol_prime)
     - *BACQ-LS-VQLS*: Poisson's equation (1D) with VQLS
 - **Prime Factorization**
-    - *BACQ-PF-PRIME*: Factorization problem
+    - *BACQ-PF-PRIME*: [Factorization problem](https://github.com/bacqfrance/bacq-gscore_ls1b-lsvol_prime)
 - **Energetic Performance**
     - *BACQ-EP-MNR*: [Metric Noise Resources][5] - Energetic consumption with VQE ([reference code][6]).
     
